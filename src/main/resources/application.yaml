@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: "Homework Antonio Casillas"
+  server:
+    port: 8088
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: true
+    use-code-as-default-message: false
+  profiles:
+    active: Development
+
+# 'Development' profile
+---
+spring:
+  config:
+    activate:
+      on-profile: Development
+  devtools:
+    livereload:
+      enabled: true
+    add-properties: true
+  datasource:
+    url: jdbc:mariadb://localhost:3306/dbHomework
+    username: hmUser
+    password: p0w4rH0m3w0rk
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+hibernate:
+  dialect: org.hibernate.dialect.MariaDBDialect
+security:
+  authentication:
+    token:
+      header: Authorization
+      prefix: Bearer
+      secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      expiration: 3600000
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    web: DEBUG
+
+# 'Test' profile
+---
+spring:
+  config:
+    activate:
+      on-profile: Test
+  devtools:
+    livereload:
+      enabled: false
+    add-properties: false
+  datasource:
+    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema-test.sql
+      data-locations: classpath:sql/data-test.sql
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+        trace: false
+        trace-allow-others: false
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect
+security:
+  authentication:
+    header: Authorization
+    token:
+      prefix: Bearer
+      secret-key: E5918AB5D877D47FA4B4A37AB4655
+      expiration: 86400000
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO
+    web: INFO

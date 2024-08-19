@@ -1,0 +1,42 @@
+package com.ntdsoftware.homework.casillas.security.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+
+@Table(name = "tokens")
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Token {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id_token", nullable = false)
+    private int id;
+
+    @Column(name = "token", nullable = false, unique = true)
+    private String token;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
+
+    @Column(name = "valid", nullable = false)
+    private boolean valid;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
+
+    public Token(String token, User user) {
+        this.token = token;
+        this.user = user;
+        this.valid = true;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+}

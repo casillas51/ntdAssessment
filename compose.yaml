@@ -1,0 +1,13 @@
+services:
+  mysql-bd:
+    image: mariadb:10.5.8
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'dbHomework'
+      MYSQL_USER: 'hmUser'
+      MYSQL_PASSWORD: 'p0w4rH0m3w0rk'
+      MYSQL_ROOT_PASSWORD: 'r00tH0m3w0rk'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
