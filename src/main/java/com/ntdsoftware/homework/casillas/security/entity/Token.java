@@ -15,10 +15,6 @@ import java.sql.Timestamp;
 public class Token {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_token", nullable = false)
-    private int id;
-
     @Column(name = "token", nullable = false, unique = true)
     private String token;
 
@@ -27,6 +23,9 @@ public class Token {
 
     @Column(name = "valid", nullable = false)
     private boolean valid;
+
+    @Column(name = "path")
+    private String path;
 
     @ManyToOne
     @JoinColumn(name = "id_user", nullable = false)

@@ -7,6 +7,7 @@ import com.ntdsoftware.homework.casillas.security.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,8 @@ public class AuthenticationController {
     public ResponseEntity<LoginUserResponse> login(@RequestBody LoginUserRequest userRequest) {
 
         log.info("Login request received for user: {}", userRequest.getUsername());
-        return ResponseEntity.ok(authenticationService.authenticate(userRequest));
+        return new ResponseEntity<>(authenticationService.authenticate(userRequest),
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/logout")
@@ -36,8 +38,8 @@ public class AuthenticationController {
 
         log.info("Logout request received");
 
-        final String authHeader = request.getHeader(authorizationHeader);
-        authenticationService.logout(authHeader);
+        authenticationService.logout(request.getHeader(authorizationHeader),
+                request.getRequestURI());
 
         return ResponseEntity.ok(new BasicResponse("OK", "Logout successful"));
     }

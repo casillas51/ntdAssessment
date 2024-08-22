@@ -1,5 +1,6 @@
 package com.ntdsoftware.homework.casillas.security.config;
 
+import com.ntdsoftware.homework.casillas.security.service.AuthenticationService;
 import com.ntdsoftware.homework.casillas.security.service.JWTService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -30,6 +31,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final AuthenticationService authenticationService;
+
     @Value("${security.authentication.token.header}")
     protected String authorizationHeader;
 
@@ -37,11 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected String tokenPrefix;
 
     public JwtAuthenticationFilter(HandlerExceptionResolver handlerExceptionResolver,
-                                   JWTService jwtService, UserDetailsService userDetailsService) {
+                                   JWTService jwtService, UserDetailsService userDetailsService,
+                                   AuthenticationService authenticationService) {
 
         this.handlerExceptionResolver = handlerExceptionResolver;
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -77,7 +82,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
 
-                    log.info("User {} authenticated", userName);
+                    if (!request.getRequestURI().contains("/auth/logout")) {
+                        String newToken = authenticationService.refreshToken(jwt, request.getRequestURI());
+                        response.setHeader(authorizationHeader, newToken);
+
+                        log.info("User {} authenticated", userName);
+                    }
                 }
             }
 
