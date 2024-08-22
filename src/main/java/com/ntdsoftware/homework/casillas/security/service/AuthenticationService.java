@@ -47,23 +47,32 @@ public class AuthenticationService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
         }
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        Token token = new Token(jwtToken, authenticatedUser);
-        tokenRepository.save(token);
-
         return LoginUserResponse.builder()
-                .token(jwtToken)
+                .token(generateToken(authenticatedUser))
                 .expiresIn(jwtService.getTokenExpiration())
                 .status(authenticatedUser.getStatus())
                 .role(authenticatedUser.getRole().getRole())
                 .build();
     }
 
-    public void logout(String authHeader) {
+    public String refreshToken(String token, String path) {
+
+        String userName = jwtService.getUserName(token);
+
+        Token tokenEntity = tokenRepository.findByTokenAndUsername(token, userName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token"));
+
+        tokenEntity.setValid(false);
+        tokenEntity.setPath(path);
+        tokenRepository.saveAndFlush(tokenEntity);
+
+        return generateToken(tokenEntity.getUser());
+    }
+
+    public void logout(String authHeader, String path) {
 
         if (null == authHeader) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token is required");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is required");
         }
 
         final String jwt = authHeader.substring(7);
@@ -73,11 +82,21 @@ public class AuthenticationService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found"));
 
         if (!token.isValid()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token is already invalid");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is already invalid");
         }
 
         token.setValid(false);
+        token.setPath(path);
         tokenRepository.saveAndFlush(token);
+    }
+
+    private String generateToken(User authenticatedUser) {
+        String jwtToken = jwtService.generateToken(authenticatedUser);
+
+        Token token = new Token(jwtToken, authenticatedUser);
+        tokenRepository.save(token);
+
+        return jwtToken;
     }
 
 }

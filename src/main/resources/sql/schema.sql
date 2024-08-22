@@ -20,12 +20,12 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS tokens (
-    id_token INT AUTO_INCREMENT,
     token VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     valid BOOLEAN DEFAULT TRUE,
+    path VARCHAR(255),
     id_user INT NOT NULL,
-    PRIMARY KEY (id_token),
+    PRIMARY KEY (token),
     CONSTRAINT fk_token_user
         FOREIGN KEY (id_user)
         REFERENCES users (id_user),

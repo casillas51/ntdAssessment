@@ -39,6 +39,12 @@ public class JWTService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    public String refreshToken(String token, UserDetails userDetails) {
+        final String username = getUserName(token);
+        final Map<String, Object> claims = extractAllClaims(token);
+        return buildToken(claims, userDetails, jwtExpiration);
+    }
+
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = getUserName(token);
 
