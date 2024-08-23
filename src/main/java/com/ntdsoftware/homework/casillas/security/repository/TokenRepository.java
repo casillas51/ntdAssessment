@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.common.repository;
+package com.ntdsoftware.homework.casillas.security.repository;
 
 import com.ntdsoftware.homework.casillas.common.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;

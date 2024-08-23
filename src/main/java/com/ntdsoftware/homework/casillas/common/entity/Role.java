@@ -10,7 +10,8 @@ import lombok.Data;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_generator")
+    @SequenceGenerator(name = "role_id_generator", sequenceName = "roles_seq", allocationSize = 1)
     @Column(name = "id_role", nullable = false)
     private int id;
 

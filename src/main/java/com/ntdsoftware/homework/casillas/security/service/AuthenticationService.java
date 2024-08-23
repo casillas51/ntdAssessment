@@ -4,7 +4,7 @@ import com.ntdsoftware.homework.casillas.security.controller.request.LoginUserRe
 import com.ntdsoftware.homework.casillas.security.controller.response.LoginUserResponse;
 import com.ntdsoftware.homework.casillas.common.entity.Token;
 import com.ntdsoftware.homework.casillas.common.entity.User;
-import com.ntdsoftware.homework.casillas.common.repository.TokenRepository;
+import com.ntdsoftware.homework.casillas.security.repository.TokenRepository;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
