@@ -1,7 +1,7 @@
 package com.ntdsoftware.homework.casillas.security.controller.response;
 
-import com.ntdsoftware.homework.casillas.security.enums.RolesEnum;
-import com.ntdsoftware.homework.casillas.security.enums.StatusEnum;
+import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
+import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

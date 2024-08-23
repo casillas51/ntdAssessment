@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.security.entity;
+package com.ntdsoftware.homework.casillas.common.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.ntdsoftware.homework.casillas.security.entity;
+package com.ntdsoftware.homework.casillas.common.entity;
 
-import com.ntdsoftware.homework.casillas.security.enums.RolesEnum;
+import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 

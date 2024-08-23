@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.controller.response;
+package com.ntdsoftware.homework.casillas.common.controller.response;
 
 import lombok.Data;
 

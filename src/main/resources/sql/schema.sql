@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 	username VARCHAR(25) NOT NULL,
     password VARCHAR(90) NOT NULL,
     status ENUM ('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_role INT NOT NULL,
     PRIMARY KEY (id_user),
     UNIQUE (username),

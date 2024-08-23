@@ -1,6 +1,6 @@
-package com.ntdsoftware.homework.casillas.security.repository;
+package com.ntdsoftware.homework.casillas.common.repository;
 
-import com.ntdsoftware.homework.casillas.security.entity.User;
+import com.ntdsoftware.homework.casillas.common.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

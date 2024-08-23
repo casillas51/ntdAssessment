@@ -1,13 +1,13 @@
-package com.ntdsoftware.homework.casillas.security.entity;
+package com.ntdsoftware.homework.casillas.common.entity;
 
-import com.ntdsoftware.homework.casillas.security.enums.RolesEnum;
-import com.ntdsoftware.homework.casillas.security.enums.StatusEnum;
+import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @Column(name = "status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE')")
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdDate;
 
     @ManyToOne
     @JoinColumn(name = "id_role", nullable = false)

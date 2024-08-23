@@ -11,6 +11,13 @@ spring:
   profiles:
     active: Development
 
+application:
+  api:
+    version1:
+      auth:  "/api/v1/auth"
+      admin: "/api/v1/admin"
+      user:  "/api/v1/user"
+
 # 'Development' profile
 ---
 spring:
@@ -93,11 +100,11 @@ hibernate:
   dialect: org.hibernate.dialect.H2Dialect
 security:
   authentication:
-    header: Authorization
     token:
+      header: Authorization
       prefix: Bearer
-      secret-key: E5918AB5D877D47FA4B4A37AB4655
-      expiration: 86400000
+      secret-key: MIHcAgEBBEIAVA3f+lHu2hCMAlrCBwHSe7b0y3O93bElbnWDhjrbX9/VBfZFQtJ3
+      expiration: 36000
 logging:
   level:
     org:

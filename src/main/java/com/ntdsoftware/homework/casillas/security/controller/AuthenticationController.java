@@ -1,6 +1,7 @@
 package com.ntdsoftware.homework.casillas.security.controller;
 
-import com.ntdsoftware.homework.casillas.controller.response.BasicResponse;
+import com.ntdsoftware.homework.casillas.common.controller.response.BasicResponse;
+
 import com.ntdsoftware.homework.casillas.security.controller.request.LoginUserRequest;
 import com.ntdsoftware.homework.casillas.security.controller.response.LoginUserResponse;
 import com.ntdsoftware.homework.casillas.security.service.AuthenticationService;
@@ -12,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("${application.api.version1.auth}")
 @Slf4j
 public class AuthenticationController {
 

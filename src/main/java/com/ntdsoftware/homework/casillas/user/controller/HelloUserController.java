@@ -1,6 +1,7 @@
 package com.ntdsoftware.homework.casillas.user.controller;
 
-import com.ntdsoftware.homework.casillas.controller.response.BasicResponse;
+import com.ntdsoftware.homework.casillas.common.controller.response.BasicResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

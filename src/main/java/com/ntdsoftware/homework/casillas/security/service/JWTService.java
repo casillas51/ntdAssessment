@@ -1,6 +1,6 @@
 package com.ntdsoftware.homework.casillas.security.service;
 
-import com.ntdsoftware.homework.casillas.security.repository.TokenRepository;
+import com.ntdsoftware.homework.casillas.common.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.security.enums;
+package com.ntdsoftware.homework.casillas.common.enums;
 
 public enum RolesEnum {
 
