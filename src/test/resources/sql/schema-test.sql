@@ -1,11 +1,11 @@
-CREATE TABLE IF NOT EXISTS roles (
+CREATE TABLE roles (
 	id_role INT AUTO_INCREMENT,
     role ENUM ('ADMIN','USER') NOT NULL,
     PRIMARY KEY (id_role),
     UNIQUE (role)
 );
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
 	id_user INT AUTO_INCREMENT,
 	username VARCHAR(25) NOT NULL,
     password VARCHAR(90) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
 	INDEX idx_username (username)
 );
 
-CREATE TABLE IF NOT EXISTS tokens (
+CREATE TABLE tokens (
     token VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     valid BOOLEAN DEFAULT TRUE,
