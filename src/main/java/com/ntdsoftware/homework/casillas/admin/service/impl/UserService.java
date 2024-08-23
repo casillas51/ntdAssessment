@@ -4,6 +4,7 @@ import com.ntdsoftware.homework.casillas.admin.controller.request.UserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.response.UserResponse;
 import com.ntdsoftware.homework.casillas.admin.exception.RoleNotFoundException;
 import com.ntdsoftware.homework.casillas.admin.exception.UserAlreadyExistsException;
+import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
 import com.ntdsoftware.homework.casillas.common.entity.Role;
 import com.ntdsoftware.homework.casillas.common.entity.User;
@@ -18,16 +19,28 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * User Service
+ */
 @Service
 @Slf4j
 public class UserService implements IUserService {
 
+    /** User repository */
     private final UserRepository userRepository;
 
+    /** Role repository */
     private final RoleRepository roleRepository;
 
+    /** Password encoder */
     private final BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor
+     * @param userRepository - User repository
+     * @param roleRepository - Role repository
+     * @param passwordEncoder - Password encoder
+     */
     public UserService(UserRepository userRepository, RoleRepository roleRepository,
                        BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -72,8 +85,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse getUser(UserRequest userRequest) {
-        return null;
+    public UserResponse getUser(int userId) throws UserNotFoundException {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .active(user.getStatus())
+                .role(user.getRole().getRole())
+                .createdDate(user.getCreatedDate())
+                .build();
     }
 
     @Override

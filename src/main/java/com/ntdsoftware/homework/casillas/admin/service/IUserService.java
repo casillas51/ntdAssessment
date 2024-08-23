@@ -4,6 +4,7 @@ import com.ntdsoftware.homework.casillas.admin.controller.request.UserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.response.UserResponse;
 import com.ntdsoftware.homework.casillas.admin.exception.RoleNotFoundException;
 import com.ntdsoftware.homework.casillas.admin.exception.UserAlreadyExistsException;
+import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +27,10 @@ public interface IUserService {
 
     /**
      * Get a user by username
-     * @param userRequest - User request
+     * @param userId - User id
      * @return UserResponse
      */
-    UserResponse getUser(UserRequest userRequest);
+    UserResponse getUser(int userId) throws UserNotFoundException;
 
     /**
      * Update a user

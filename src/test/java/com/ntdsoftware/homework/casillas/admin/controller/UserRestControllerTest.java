@@ -11,23 +11,34 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * User Rest Controller test
+ */
 @AutoConfigureMockMvc
 public class UserRestControllerTest implements ApplicationTest {
 
+    /** Login URL */
     @Value("${application.api.version1.auth}")
     private String LoginURL;
 
+    /** User URL */
     @Value("${application.api.version1.admin}")
     private String URL;
 
+    /** Mock MVC */
     @Autowired
     private MockMvc mockMvc;
 
+    /** Token */
     private String token;
 
+    /**
+     * Login
+     * @throws Exception - Exception
+     */
     @BeforeEach
     void login() throws Exception {
         MvcResult result = mockMvc.perform(post(LoginURL + "/login")
@@ -40,6 +51,10 @@ public class UserRestControllerTest implements ApplicationTest {
         this.token = JsonPath.parse(response).read("$.token");
     }
 
+    /**
+     * Create a new user
+     * @throws Exception - Exception
+     */
     @Test
     void whenCreateValidUser_thenReturns201() throws Exception {
 
@@ -50,6 +65,10 @@ public class UserRestControllerTest implements ApplicationTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Create a new user with invalid input
+     * @throws Exception - Exception
+     */
     @Test
     void whenInputIsNull_thenReturns400() throws Exception {
 
@@ -60,6 +79,10 @@ public class UserRestControllerTest implements ApplicationTest {
                 .andExpect(status().isBadRequest());
     }
 
+    /**
+     * Create a new user with existing username
+     * @throws Exception - Exception
+     */
     @Test
     void whenUserExists_thenReturn409() throws Exception {
 
@@ -70,6 +93,10 @@ public class UserRestControllerTest implements ApplicationTest {
                 .andExpect(status().isConflict());
     }
 
+    /**
+     * Create a new user with invalid role
+     * @throws Exception - Exception
+     */
     @Test
     void whenRoleIsInvalid_thenReturns404() throws Exception {
 
@@ -77,6 +104,30 @@ public class UserRestControllerTest implements ApplicationTest {
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\":\"TestUser\",\"password\":\"User123\",\"role\":\"INVALID\",\"active\":true}"))
+                .andExpect(status().isNotFound());
+    }
+
+    /**
+     * Get existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenGetExistingUser_thenReturnOk() throws Exception {
+
+        mockMvc.perform(get(URL + "/user/1")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Get non-existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenGetNonExistingUser_thenReturn404() throws Exception {
+
+        mockMvc.perform(get(URL + "/user/0")
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
 }
