@@ -3,6 +3,7 @@ package com.ntdsoftware.homework.casillas.common.entity;
 import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name = "users")
 @Entity
 @Data
+@Accessors(chain = true)
 public class User implements UserDetails {
 
     @Id

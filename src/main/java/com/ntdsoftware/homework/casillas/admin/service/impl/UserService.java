@@ -1,8 +1,11 @@
 package com.ntdsoftware.homework.casillas.admin.service.impl;
 
+import static com.ntdsoftware.homework.casillas.common.ValidationUtils.validate;
+
 import com.ntdsoftware.homework.casillas.admin.controller.request.UserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.response.UserResponse;
 import com.ntdsoftware.homework.casillas.admin.exception.RoleNotFoundException;
+import com.ntdsoftware.homework.casillas.admin.exception.UniqueAdminUserException;
 import com.ntdsoftware.homework.casillas.admin.exception.UserAlreadyExistsException;
 import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
@@ -10,6 +13,7 @@ import com.ntdsoftware.homework.casillas.common.entity.Role;
 import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
+import com.ntdsoftware.homework.casillas.common.exception.ApplicationException;
 import com.ntdsoftware.homework.casillas.common.repository.RoleRepository;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +53,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse createUser(UserRequest userRequest) throws UserAlreadyExistsException, RoleNotFoundException {
+    public UserResponse createUser(UserRequest userRequest) throws ApplicationException {
 
-        RolesEnum roleEnum = RolesEnum.getRole(userRequest.getRole().toUpperCase());
-
-        Role role = roleRepository.findByRole(roleEnum)
-                .orElseThrow(() -> new RoleNotFoundException(userRequest.getRole()));
+        Role role = getRole(userRequest.getRole());
 
         User user = userRepository.findByUsername(userRequest.getUsername())
                 .orElseGet(() -> {
@@ -85,10 +86,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse getUser(int userId) throws UserNotFoundException {
+    public UserResponse getUser(int userId) throws ApplicationException {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
+
+        log.info("User {} retrieved: {}", user.getId(), user.getUsername());
 
         return UserResponse.builder()
                 .id(user.getId())
@@ -100,8 +103,61 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse updateUser(UserRequest userRequest) {
-        return null;
+    public UserResponse updateUser(int userId, UserRequest userRequest) throws ApplicationException {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        if (validate().isNullOrEmpty(userRequest.getUsername())) {
+            log.error("Username is required");
+            throw new UserNotFoundException();
+        }
+
+        if (!user.getUsername().equalsIgnoreCase(userRequest.getUsername())) {
+            log.error("User {} not found", userRequest.getUsername());
+            throw new UserNotFoundException(userRequest.getUsername());
+        }
+
+        if (null != userRequest.getRole()) {
+            Role roleRequest = getRole(userRequest.getRole());
+
+            // Validate change of admin role
+            if (user.getRole().getRole().equals(RolesEnum.ADMIN)
+                    && !roleRequest.getRole().equals(RolesEnum.ADMIN)) {
+
+                validateUniqueAdminRole();
+            }
+
+            user.setRole(roleRequest);
+        }
+
+        if (null != userRequest.getPassword()) {
+            user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        }
+
+        if (null != userRequest.getActive()) {
+
+            // Validate admin user will be inactive
+            if (user.getRole().getRole().equals(RolesEnum.ADMIN)
+                    && !userRequest.getActive()) {
+
+                validateUniqueAdminRole();
+            }
+
+            user.setStatus(userRequest.getActive() ? StatusEnum.ACTIVE : StatusEnum.INACTIVE);
+        }
+
+        user = userRepository.save(user);
+
+        log.info("User {} updated: {}", user.getId(), user.getUsername());
+
+        return UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .active(user.getStatus())
+                .role(user.getRole().getRole())
+                .createdDate(user.getCreatedDate())
+                .build();
     }
 
     @Override
@@ -112,6 +168,31 @@ public class UserService implements IUserService {
     @Override
     public List<UserResponse> getAllUsers() {
         return List.of();
+    }
+
+    /**
+     * Get role
+     * @param role - Role
+     * @return Role
+     * @throws RoleNotFoundException - Role not found exception
+     */
+    private Role getRole(String role) throws RoleNotFoundException {
+
+        RolesEnum roleEnum = RolesEnum.getRole(role.toUpperCase());
+
+        return roleRepository.findByRole(roleEnum)
+                .orElseThrow(() -> new RoleNotFoundException(role));
+    }
+
+    /**
+     * Validate that must exists at least one admin role
+     * @throws UniqueAdminUserException - Unique admin user exception
+     */
+    private void validateUniqueAdminRole() throws UniqueAdminUserException {
+        if (userRepository.countByRoleAndStatus(RolesEnum.ADMIN, StatusEnum.ACTIVE) < 2) {
+            log.error("There must be at least one admin user");
+            throw new UniqueAdminUserException();
+        }
     }
 
 }

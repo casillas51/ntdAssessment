@@ -3,10 +3,12 @@ package com.ntdsoftware.homework.casillas.common.entity;
 import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Table(name = "roles")
 @Entity
 @Data
+@Accessors(chain = true)
 public class Role {
 
     @Id
