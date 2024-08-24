@@ -60,4 +60,14 @@ public class UserRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable int userId,
+                   @RequestBody UserRequest userRequest) throws ApplicationException {
+
+        log.info("Update user: {}", userId);
+
+        UserResponse response = userService.updateUser(userId, userRequest);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

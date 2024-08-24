@@ -130,4 +130,32 @@ public class UserRestControllerTest implements ApplicationTest {
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
+
+    /**
+     * Update existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenUpdateUser_thenReturns200() throws Exception {
+
+        mockMvc.perform(put(URL + "/user/1")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"Admin\",\"password\":\"Adm123\",\"role\":\"ADMIN\",\"active\":true}"))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Update non-existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenUpdateNonExistingUser_thenReturns404() throws Exception {
+
+        mockMvc.perform(put(URL + "/user/0")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"Test\",\"password\":\"User123\",\"role\":\"ADMIN\",\"active\":true}"))
+                .andExpect(status().isNotFound());
+    }
 }

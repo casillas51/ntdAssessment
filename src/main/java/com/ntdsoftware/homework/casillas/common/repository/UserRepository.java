@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByUsername(String username);
 
-    long countByRoleAndStatus(RolesEnum role, StatusEnum status);
+    long countByStatusAndRole_role(StatusEnum status, RolesEnum role);
 
 }

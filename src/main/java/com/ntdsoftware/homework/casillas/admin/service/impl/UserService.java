@@ -138,7 +138,8 @@ public class UserService implements IUserService {
         if (null != userRequest.getActive()) {
 
             // Validate admin user will be inactive
-            if (user.getRole().getRole().equals(RolesEnum.ADMIN)
+            if ((user.getRole().getRole().equals(RolesEnum.ADMIN)
+                    && user.getStatus().equals(StatusEnum.ACTIVE))
                     && !userRequest.getActive()) {
 
                 validateUniqueAdminRole();
@@ -189,7 +190,7 @@ public class UserService implements IUserService {
      * @throws UniqueAdminUserException - Unique admin user exception
      */
     private void validateUniqueAdminRole() throws UniqueAdminUserException {
-        if (userRepository.countByRoleAndStatus(RolesEnum.ADMIN, StatusEnum.ACTIVE) < 2) {
+        if (userRepository.countByStatusAndRole_role(StatusEnum.ACTIVE, RolesEnum.ADMIN) <= 1) {
             log.error("There must be at least one admin user");
             throw new UniqueAdminUserException();
         }
