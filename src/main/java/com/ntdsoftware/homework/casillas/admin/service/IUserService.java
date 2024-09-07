@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
  * IUserService defines the contract for user management operations.
  * It includes methods for creating, retrieving, updating, and deleting users,
  * as well as retrieving all users with pagination and sorting.
- *
  * Implementations of this interface should handle the business logic for user management
  * and interact with the necessary repositories and services.
  */
