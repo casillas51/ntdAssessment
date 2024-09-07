@@ -146,6 +146,10 @@ public class UserService implements IUserService {
             user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         }
 
+        if (null != user.getBalance()) {
+            user.setBalance(userRequest.getBalance());
+        }
+
         if (null != userRequest.getActive()) {
 
             // Validate admin user will be inactive

@@ -194,7 +194,7 @@ public class UserServiceTest implements ApplicationTest {
         request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN").setActive(true);
         assertUserResponse(userService.updateUser(100, request));
 
-        request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN");
+        request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN").setBalance(50.0);
         assertUserResponse(userService.updateUser(100, request));
     }
 
@@ -225,7 +225,7 @@ public class UserServiceTest implements ApplicationTest {
         request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN").setActive(false);
         assertUserResponse(userService.updateUser(100, request));
 
-        request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN").setActive(true);
+        request = new UserRequest().setUsername("test").setPassword("test").setRole("ADMIN").setActive(true).setBalance(50.0);
         assertUserResponse(userService.updateUser(100, request));
     }
 
