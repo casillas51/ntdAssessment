@@ -1,5 +1,7 @@
 package com.ntdsoftware.homework.casillas.security.config;
 
+import com.ntdsoftware.homework.casillas.admin.exception.UserAccountIsDisabledException;
+import com.ntdsoftware.homework.casillas.common.exception.ApplicationException;
 import com.ntdsoftware.homework.casillas.security.service.AuthenticationService;
 import com.ntdsoftware.homework.casillas.security.service.JWTService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -72,6 +74,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
 
+                log.info("Account is enabled: {}", userDetails.isEnabled());
+
+                if (!userDetails.isEnabled()) {
+                    throw new UserAccountIsDisabledException(userDetails.getUsername());
+                }
+
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -97,6 +105,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.error("JWT token has expired");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             handlerExceptionResolver.resolveException(request, response, null, expiredJwtException);
+
+        } catch (ApplicationException applicationException) {
+            log.error(applicationException.getMessage());
+            response.setStatus(applicationException.getHttpStatus().value());
+            handlerExceptionResolver.resolveException(request, response, null, applicationException);
+
         }
     }
 

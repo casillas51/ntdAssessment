@@ -1,6 +1,6 @@
 package com.ntdsoftware.homework.casillas.security.config;
 
-import com.ntdsoftware.homework.casillas.security.repository.UserRepository;
+import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

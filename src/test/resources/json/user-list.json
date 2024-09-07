@@ -1,0 +1,35 @@
+[
+    {
+      "id": 11,
+      "username": "casillas",
+      "status": "INACTIVE",
+      "createdDate": "2024-08-24T02:02:12.000+00:00",
+      "role": {
+        "id": 2,
+        "role": "USER"
+      },
+      "deleted": false
+    },
+    {
+      "id": 2,
+      "username": "User1",
+      "status": "ACTIVE",
+      "createdDate": "2024-08-24T00:13:07.000+00:00",
+      "role": {
+        "id": 2,
+        "role": "USER"
+      },
+      "deleted": false
+    },
+    {
+      "id": 1,
+      "username": "Admin",
+      "status": "ACTIVE",
+      "createdDate": "2024-08-24T00:13:07.000+00:00",
+      "role": {
+        "id": 1,
+        "role": "ADMIN"
+      },
+      "deleted": false
+    }
+]
