@@ -85,7 +85,8 @@ public class UserRestController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<UserResponse>> getAllUsers(@RequestBody DataQueryRequest<QueryUserRequest> userRequest) throws ApplicationException {
+    public ResponseEntity<Page<UserResponse>> getAllUsers(@NotNull(message = "User request is required")
+            @RequestBody @Valid DataQueryRequest<QueryUserRequest> userRequest) throws ApplicationException {
 
         log.info("Search user: {}", userRequest.toString());
 

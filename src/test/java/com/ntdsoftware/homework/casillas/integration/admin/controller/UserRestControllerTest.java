@@ -57,7 +57,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenCreateValidUser_thenReturns201() throws Exception {
-
         mockMvc.perform(post(URL + "/user")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,7 +70,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenInputIsNull_thenReturns400() throws Exception {
-
         mockMvc.perform(post(URL + "/user")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +83,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenUserExists_thenReturn409() throws Exception {
-
         mockMvc.perform(post(URL + "/user")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +96,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenRoleIsInvalid_thenReturns404() throws Exception {
-
         mockMvc.perform(post(URL + "/user")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -113,7 +109,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenGetExistingUser_thenReturnOk() throws Exception {
-
         mockMvc.perform(get(URL + "/user/1")
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
@@ -125,7 +120,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenGetNonExistingUser_thenReturn404() throws Exception {
-
         mockMvc.perform(get(URL + "/user/0")
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
@@ -137,7 +131,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenUpdateUser_thenReturns200() throws Exception {
-
         mockMvc.perform(put(URL + "/user/1")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -151,7 +144,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenUpdateNonExistingUser_thenReturns404() throws Exception {
-
         mockMvc.perform(put(URL + "/user/0")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -165,7 +157,6 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void whenDeleteExistingUser_thenReturns201() throws Exception {
-
         mockMvc.perform(delete(URL + "/user/5")
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isAccepted());
@@ -177,10 +168,47 @@ public class UserRestControllerTest implements ApplicationTest {
      */
     @Test
     void WhenDeleteNonExistingUser_thenReturn404() throws Exception {
-
         mockMvc.perform(delete(URL + "/user/0")
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Get all users
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenGetAllUsers_thenReturnOk() throws Exception {
+        mockMvc.perform(post(URL + "/user/search")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"query\": { \"status\":\"ACTIVE\" }, \"page\":0,\"size\":10 }"))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Get all users with invalid input
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenGetAllUsersWithInvalidInput_thenReturns400() throws Exception {
+        mockMvc.perform(post(URL + "/user/search")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    /**
+     * Get all users with not found records
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenGetAllUsersWithNotFoundRecords_thenReturns404() throws Exception {
+        mockMvc.perform(post(URL + "/user/search")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"query\": { \"username\":\"UserNameNotExists\" }, \"page\":0,\"size\":10 }"))
+                .andExpect(status().isNotFound());
+    }
 }

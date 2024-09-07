@@ -1,6 +1,7 @@
 package com.ntdsoftware.homework.casillas.common.controller.request;
 
 import com.ntdsoftware.homework.casillas.common.enums.SortsEnum;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.domain.Sort;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class DataQueryRequest<T> {
 
     /** The query object containing the criteria for querying data */
+    @NotNull(message = "Query object is required")
     private T query;
 
     /** The page number for pagination, default is 1 */
