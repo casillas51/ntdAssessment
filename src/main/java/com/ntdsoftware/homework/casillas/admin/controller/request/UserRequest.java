@@ -22,6 +22,9 @@ public class UserRequest {
     @NotBlank(message = "Password is required")
     private String password;
 
+    /** The user's balance to perform operations */
+    private Double balance = 0.0;
+
     /** The active status of the user. */
     @NotNull(message = "Active is required")
     private Boolean active;

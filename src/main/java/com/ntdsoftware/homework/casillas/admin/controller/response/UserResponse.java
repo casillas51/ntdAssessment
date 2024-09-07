@@ -22,6 +22,9 @@ public class UserResponse {
     /** The username of the user */
     private String username;
 
+    /** The user's balance to perform operations */
+    private Double balance;
+
     /** The email of the user */
     private StatusEnum active;
 

@@ -42,6 +42,10 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    /** The user's balance to perform operations */
+    @Column(name = "balance", nullable = false)
+    private Double balance;
+
     /** The status of the user */
     @Column(name = "status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'INACTIVE')")
     @Enumerated(EnumType.STRING)
@@ -94,6 +98,7 @@ public class User implements UserDetails {
         return UserResponse.builder()
                 .id(id)
                 .username(username)
+                .balance(balance)
                 .active(status)
                 .role(role.getRole())
                 .createdDate(createdDate)

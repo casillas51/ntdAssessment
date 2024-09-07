@@ -9,6 +9,7 @@ CREATE TABLE users (
 	id_user INT AUTO_INCREMENT,
 	username VARCHAR(25) NOT NULL,
     password VARCHAR(90) NOT NULL,
+    balance DECIMAL(10,2) DEFAULT 0.0,
     status ENUM ('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_role INT NOT NULL,
