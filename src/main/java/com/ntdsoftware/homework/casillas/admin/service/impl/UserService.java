@@ -79,6 +79,7 @@ public class UserService implements IUserService {
                     User newUser = new User();
                     newUser.setUsername(userRequest.getUsername());
                     newUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+                    newUser.setBalance(userRequest.getBalance());
                     newUser.setStatus(userRequest.getActive() ? StatusEnum.ACTIVE : StatusEnum.INACTIVE);
                     newUser.setCreatedDate(new Timestamp(System.currentTimeMillis()));
                     newUser.setRole(role);
