@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.admin.controller;
+package com.ntdsoftware.homework.casillas.integration.admin.controller;
 
 import com.jayway.jsonpath.JsonPath;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;
@@ -158,4 +158,29 @@ public class UserRestControllerTest implements ApplicationTest {
                 .content("{\"username\":\"Test\",\"password\":\"User123\",\"role\":\"ADMIN\",\"active\":true}"))
                 .andExpect(status().isNotFound());
     }
+
+    /**
+     * Delete user with existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenDeleteExistingUser_thenReturns201() throws Exception {
+
+        mockMvc.perform(delete(URL + "/user/5")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isAccepted());
+    }
+
+    /**
+     * Delete user with non-existing user
+     * @throws Exception - Exception
+     */
+    @Test
+    void WhenDeleteNonExistingUser_thenReturn404() throws Exception {
+
+        mockMvc.perform(delete(URL + "/user/0")
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isNotFound());
+    }
+
 }

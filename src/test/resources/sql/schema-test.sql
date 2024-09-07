@@ -12,6 +12,7 @@ CREATE TABLE users (
     status ENUM ('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_role INT NOT NULL,
+    deleted boolean NOT NULL,
     PRIMARY KEY (id_user),
     UNIQUE (username),
     CONSTRAINT fk_user_role

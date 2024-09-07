@@ -30,4 +30,7 @@ public class UserResponse {
 
     /** The role of the user */
     private RolesEnum role;
+
+    /** The deleted status of the user */
+    private Boolean deleted;
 }

@@ -2,6 +2,7 @@ package com.ntdsoftware.homework.casillas.admin.service.impl;
 
 import static com.ntdsoftware.homework.casillas.common.ValidationUtils.validate;
 
+import com.ntdsoftware.homework.casillas.admin.controller.request.QueryUserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.request.UserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.response.UserResponse;
 import com.ntdsoftware.homework.casillas.admin.exception.RoleNotFoundException;
@@ -9,22 +10,38 @@ import com.ntdsoftware.homework.casillas.admin.exception.UniqueAdminUserExceptio
 import com.ntdsoftware.homework.casillas.admin.exception.UserAlreadyExistsException;
 import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
+import com.ntdsoftware.homework.casillas.common.controller.request.DataQueryRequest;
 import com.ntdsoftware.homework.casillas.common.entity.Role;
 import com.ntdsoftware.homework.casillas.common.entity.User;
+import com.ntdsoftware.homework.casillas.common.entity.specificationBuilder.UserSpecificationBuilder;
 import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
-import com.ntdsoftware.homework.casillas.common.exception.ApplicationException;
+import com.ntdsoftware.homework.casillas.common.exception.NoResultException;
 import com.ntdsoftware.homework.casillas.common.repository.RoleRepository;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
- * User Service
+ * UserService provides the implementation of the IUserService interface.
+ * It handles the business logic for user management, including creating, retrieving,
+ * updating, and deleting users, as well as retrieving all users with pagination and sorting.
+ * This service interacts with the UserRepository and RoleRepository to perform database operations.
+ * It also uses BCryptPasswordEncoder for password encryption.
+ * The service includes validation to ensure that there is always at least one active admin user.
+ *
+ * @see IUserService
+ * @see UserRepository
+ * @see RoleRepository
+ * @see BCryptPasswordEncoder
  */
 @Service
 @Slf4j
@@ -53,7 +70,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse createUser(UserRequest userRequest) throws ApplicationException {
+    public UserResponse createUser(UserRequest userRequest) {
 
         Role role = getRole(userRequest.getRole());
 
@@ -76,17 +93,11 @@ public class UserService implements IUserService {
 
         log.info("User {} created: {}", user.getId(), user.getUsername());
 
-        return UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .active(user.getStatus())
-                .role(user.getRole().getRole())
-                .createdDate(user.getCreatedDate())
-                .build();
+        return user.mapToResponse();
     }
 
     @Override
-    public UserResponse getUser(int userId) throws ApplicationException {
+    public UserResponse getUser(int userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -103,7 +114,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse updateUser(int userId, UserRequest userRequest) throws ApplicationException {
+    public UserResponse updateUser(int userId, UserRequest userRequest) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -152,23 +163,53 @@ public class UserService implements IUserService {
 
         log.info("User {} updated: {}", user.getId(), user.getUsername());
 
-        return UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .active(user.getStatus())
-                .role(user.getRole().getRole())
-                .createdDate(user.getCreatedDate())
-                .build();
+        return user.mapToResponse();
     }
 
     @Override
-    public void deleteUser(UserRequest userRequest) {
+    public void deleteUser(int userId) {
 
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        if (user.getRole().getRole().equals(RolesEnum.ADMIN)) {
+            validateUniqueAdminRole();
+        }
+
+        userRepository.delete(user);
+        log.info("User {} has been deleted", user.getUsername());
     }
 
     @Override
-    public List<UserResponse> getAllUsers() {
-        return List.of();
+    public Page<UserResponse> getAllUsers(DataQueryRequest<QueryUserRequest> userRequest) {
+
+        UserSpecificationBuilder specificationBuilder = new UserSpecificationBuilder()
+                .setUsername(userRequest.getQuery().getUsername())
+                .setCreatedDateFrom(userRequest.getQuery().getCreatedDateFrom())
+                .setCreatedDateTo(userRequest.getQuery().getCreatedDateTo())
+                .setDeleted(userRequest.getQuery().getDeleted());
+
+        if (null != userRequest.getQuery().getStatus()) {
+            specificationBuilder.setStatus(StatusEnum.getStatus(userRequest.getQuery().getStatus()));
+        }
+
+        if (null != userRequest.getQuery().getRole()) {
+            specificationBuilder.setRole(getRole(userRequest.getQuery().getRole()));
+        }
+
+        Pageable pageable = PageRequest.of(userRequest.getPage(), userRequest.getSize(), Sort.by(userRequest.getSorts()));
+        Specification<User> specification = specificationBuilder.buildSpecification();
+        Page<User> users = null;
+
+        users = (null != specification) ? userRepository.findAll(specification, pageable) : userRepository.findAll(pageable);
+
+        if (users.getNumberOfElements() < 1) {
+            log.error("No users found");
+            throw new NoResultException();
+        }
+
+        log.info("Users retrieved: {} in total page(s): {}", users.getTotalElements(), users.getTotalPages());
+        return users.map(User::mapToResponse);
     }
 
     /**
