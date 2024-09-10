@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.admin.controller;
+package com.ntdsoftware.homework.casillas.integration.user.controller;
 
 import com.jayway.jsonpath.JsonPath;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-public class AdminControllerConfig implements ApplicationTest {
+public class UserControllerConfig implements ApplicationTest {
 
     /** Login URL */
     @Value("${application.api.version1.auth}")
@@ -35,7 +35,7 @@ public class AdminControllerConfig implements ApplicationTest {
     void login() throws Exception {
         MvcResult result = mockMvc.perform(post(LoginURL + "/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\":\"Admin\",\"password\":\"Adm123\"}"))
+                        .content("{\"username\":\"User1\",\"password\":\"User123\"}"))
                 .andExpect(status().isCreated())
                 .andReturn();
 

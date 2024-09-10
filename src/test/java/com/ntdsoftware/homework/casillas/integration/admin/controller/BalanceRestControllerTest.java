@@ -2,10 +2,8 @@ package com.ntdsoftware.homework.casillas.integration.admin.controller;
 
 import com.ntdsoftware.homework.casillas.admin.controller.response.BalanceResponse;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -16,10 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * This class tests the various endpoints of the BalanceRestController to ensure they function correctly.
  */
 public class BalanceRestControllerTest extends AdminControllerConfig {
-
-    /** Mock MVC */
-    @Autowired
-    private MockMvc mockMvc;
 
     /** Admin URL */
     @Value("${application.api.version1.admin}")

@@ -34,7 +34,16 @@ public interface IUserService {
      * @return the user response
      * @throws ApplicationException if an error occurs during user retrieval
      */
-    UserResponse getUser(int userId) throws ApplicationException;
+    UserResponse getUserById(int userId) throws ApplicationException;
+
+    /**
+     * Retrieves a user by their username.
+     *
+     * @param userName the username of the user to retrieve
+     * @return the user response
+     * @throws ApplicationException if an error occurs during user retrieval
+     */
+    int getUserId(String userName) throws ApplicationException;
 
     /**
      * Updates a user with the given user request.

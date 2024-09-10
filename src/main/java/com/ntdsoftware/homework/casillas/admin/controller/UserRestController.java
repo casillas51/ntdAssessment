@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * User Rest Controller
  */
@@ -61,7 +59,7 @@ public class UserRestController {
 
         log.info("Get user: {}", userId);
 
-        UserResponse response = userService.getUser(userId);
+        UserResponse response = userService.getUserById(userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
