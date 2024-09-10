@@ -4,8 +4,10 @@ import org.springframework.http.HttpStatus;
 
 public class NoResultException extends ApplicationException {
 
+    private static final String message = "No result found";
+
     public NoResultException() {
-        super(NoResultException.class.getSimpleName(), "No result found", HttpStatus.NOT_FOUND);
+        super(NoResultException.class.getSimpleName(), message, HttpStatus.NOT_FOUND);
     }
 
 }

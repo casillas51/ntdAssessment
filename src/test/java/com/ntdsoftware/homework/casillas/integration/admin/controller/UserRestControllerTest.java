@@ -60,7 +60,7 @@ public class UserRestControllerTest implements ApplicationTest {
         mockMvc.perform(post(URL + "/user")
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"username\":\"TestUser\",\"password\":\"User123\",\"role\":\"USER\",\"active\":true}"))
+                .content("{\"username\":\"TestUser\",\"password\":\"User123\",\"balance\":25.0,\"role\":\"USER\",\"active\":true}"))
                 .andExpect(status().isCreated());
     }
 

@@ -16,6 +16,7 @@ import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.entity.specificationBuilder.UserSpecificationBuilder;
 import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
+import com.ntdsoftware.homework.casillas.common.exception.ApplicationException;
 import com.ntdsoftware.homework.casillas.common.exception.NoResultException;
 import com.ntdsoftware.homework.casillas.common.repository.RoleRepository;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
@@ -79,6 +80,7 @@ public class UserService implements IUserService {
                     User newUser = new User();
                     newUser.setUsername(userRequest.getUsername());
                     newUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+                    newUser.setBalance(userRequest.getBalance());
                     newUser.setStatus(userRequest.getActive() ? StatusEnum.ACTIVE : StatusEnum.INACTIVE);
                     newUser.setCreatedDate(new Timestamp(System.currentTimeMillis()));
                     newUser.setRole(role);
@@ -97,7 +99,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse getUser(int userId) {
+    public UserResponse getUserById(int userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
@@ -111,6 +113,17 @@ public class UserService implements IUserService {
                 .role(user.getRole().getRole())
                 .createdDate(user.getCreatedDate())
                 .build();
+    }
+
+    @Override
+    public int getUserId(String userName) {
+
+        User user = userRepository.findByUsername(userName)
+                .orElseThrow(() -> new UserNotFoundException(userName));
+
+        log.info("User {} retrieved", user.getUsername());
+
+        return user.getId();
     }
 
     @Override
@@ -144,6 +157,10 @@ public class UserService implements IUserService {
 
         if (null != userRequest.getPassword()) {
             user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        }
+
+        if (null != user.getBalance()) {
+            user.setBalance(userRequest.getBalance());
         }
 
         if (null != userRequest.getActive()) {

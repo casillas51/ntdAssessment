@@ -93,6 +93,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (!request.getRequestURI().contains("/auth/logout")) {
                         String newToken = authenticationService.refreshToken(jwt, request.getRequestURI());
                         response.setHeader(authorizationHeader, newToken);
+                        request.setAttribute("userName", userDetails.getUsername());
 
                         log.info("User {} authenticated", userName);
                     }

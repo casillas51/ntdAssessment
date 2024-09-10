@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
  * IUserService defines the contract for user management operations.
  * It includes methods for creating, retrieving, updating, and deleting users,
  * as well as retrieving all users with pagination and sorting.
- *
  * Implementations of this interface should handle the business logic for user management
  * and interact with the necessary repositories and services.
  */
@@ -35,7 +34,16 @@ public interface IUserService {
      * @return the user response
      * @throws ApplicationException if an error occurs during user retrieval
      */
-    UserResponse getUser(int userId) throws ApplicationException;
+    UserResponse getUserById(int userId) throws ApplicationException;
+
+    /**
+     * Retrieves a user by their username.
+     *
+     * @param userName the username of the user to retrieve
+     * @return the user response
+     * @throws ApplicationException if an error occurs during user retrieval
+     */
+    int getUserId(String userName) throws ApplicationException;
 
     /**
      * Updates a user with the given user request.
