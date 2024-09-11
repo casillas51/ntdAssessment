@@ -19,4 +19,13 @@ public class OperationTypeNotFoundException extends ApplicationException {
                 String.format(message, operationType), HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Constructor
+     * @param operationId - Operation id
+     */
+    public OperationTypeNotFoundException(int operationId) {
+        super(OperationTypeNotFoundException.class.getSimpleName(),
+                String.format(message, String.valueOf(operationId)), HttpStatus.NOT_FOUND);
+    }
+
 }
