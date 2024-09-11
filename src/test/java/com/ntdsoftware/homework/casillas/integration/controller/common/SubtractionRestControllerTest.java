@@ -29,4 +29,17 @@ public class SubtractionRestControllerTest extends CommonControllerConfig {
                 .content("{\"minuend\":\"10\",\"subtrahend\":\"5\"}"))
                 .andExpect(status().isOk());
     }
+
+    /**
+     * Test for the subtraction operation with null values.
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenSubtractionWithNullValues_thenReturns400() throws Exception {
+        mockMvc.perform(post(URL + "/operation/subtraction")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"minuend\":null,\"subtrahend\":null}"))
+                .andExpect(status().isBadRequest());
+    }
 }
