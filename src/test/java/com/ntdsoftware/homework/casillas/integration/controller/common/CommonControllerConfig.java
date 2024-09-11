@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.user.controller;
+package com.ntdsoftware.homework.casillas.integration.controller.common;
 
 import com.jayway.jsonpath.JsonPath;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-public class UserControllerConfig implements ApplicationTest {
+public class CommonControllerConfig implements ApplicationTest {
 
     /** Login URL */
     @Value("${application.api.version1.auth}")

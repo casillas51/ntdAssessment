@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class BalanceService implements IBalanceService {
+public class BalanceServiceImpl implements IBalanceService {
 
     /**
      * The UserRepository instance to interact with the database.
@@ -32,7 +32,7 @@ public class BalanceService implements IBalanceService {
      *
      * @param userRepository the UserRepository instance to interact with the database
      */
-    public BalanceService(UserRepository userRepository) {
+    public BalanceServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

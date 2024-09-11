@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.user.controller;
+package com.ntdsoftware.homework.casillas.common.controller;
 
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
 import com.ntdsoftware.homework.casillas.common.service.IBalanceService;
@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${application.api.version1.user}/balance")
 @Slf4j
-public class UserBalanceRestController {
-
-    /** The UserService instance to handle user operations. */
-    private final IUserService userService;
+public class CommonBalanceRestController extends CommonController {
 
     /** The BalanceService instance to handle balance operations. */
     private final IBalanceService balanceService;
@@ -34,8 +31,8 @@ public class UserBalanceRestController {
      * @param userService the UserService instance to handle user operations
      * @param balanceService the BalanceService instance to handle balance operations
      */
-    public UserBalanceRestController(IUserService userService, IBalanceService balanceService) {
-        this.userService = userService;
+    public CommonBalanceRestController(IUserService userService, IBalanceService balanceService) {
+        super(userService);
         this.balanceService = balanceService;
     }
 
@@ -48,8 +45,7 @@ public class UserBalanceRestController {
     @GetMapping
     public ResponseEntity<Double> getBalance(HttpServletRequest request) {
 
-        String userName = (String) request.getAttribute("userName");
-        int userId = userService.getUserId(userName);
+        int userId = getUserId(request);
 
         log.info("Get balance for user: {}", userId);
 
@@ -69,8 +65,7 @@ public class UserBalanceRestController {
             @Valid @Min(value = 0, message = "Deposit amount must be greater than 0")
             @NotNull(message = "Deposit amount is required") double deposit) {
 
-        String userName = (String) request.getAttribute("userName");
-        int userId = userService.getUserId(userName);
+        int userId = getUserId(request);
 
         log.info("Deposit amount for user: {}", userId);
 

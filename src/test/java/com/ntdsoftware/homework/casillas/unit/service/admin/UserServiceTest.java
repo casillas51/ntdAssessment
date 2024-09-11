@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.unit.admin.service;
+package com.ntdsoftware.homework.casillas.unit.service.admin;
 
 import com.ntdsoftware.homework.casillas.admin.controller.response.UserResponse;
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;

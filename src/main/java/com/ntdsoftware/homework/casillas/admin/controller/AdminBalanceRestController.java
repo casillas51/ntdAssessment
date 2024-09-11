@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${application.api.version1.admin}/balance")
 @Slf4j
-public class BalanceRestController {
+public class AdminBalanceRestController {
 
     /**
      * The BalanceService instance to handle balance operations.
@@ -31,7 +31,7 @@ public class BalanceRestController {
      *
      * @param balanceService the BalanceService instance to handle balance operations
      */
-    public BalanceRestController(IBalanceService balanceService) {
+    public AdminBalanceRestController(IBalanceService balanceService) {
         this.balanceService = balanceService;
     }
 

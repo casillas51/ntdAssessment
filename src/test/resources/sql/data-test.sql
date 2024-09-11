@@ -6,3 +6,8 @@ insert into users (id_user, username, status, password, balance, id_role, delete
 insert into users (id_user, username, status, password, balance, id_role, deleted) values (next value for users_seq, 'User2', 'ACTIVE', '$2a$10$MFfcCO.wDLlmRYW3kbH/y.ZJbUzndwtYS7uh/I.ka4LagGL2GJmyG', 30.0, 2, false);
 insert into users (id_user, username, status, password, balance, id_role, deleted) values (next value for users_seq, 'User3', 'ACTIVE', '$2a$10$MFfcCO.wDLlmRYW3kbH/y.ZJbUzndwtYS7uh/I.ka4LagGL2GJmyG', 40.4, 2, false);
 insert into users (id_user, username, status, password, balance, id_role, deleted) values (next value for users_seq, 'UserDelete', 'ACTIVE', '$2a$10$MFfcCO.wDLlmRYW3kbH/y.ZJbUzndwtYS7uh/I.ka4LagGL2GJmyG', 27.3, 2, false);
+
+INSERT INTO operations (id_operation, type, cost) VALUES (next value for operations_seq, 'ADDITION', 10.0);
+INSERT INTO operations (id_operation, type, cost) VALUES (next value for operations_seq, 'SUBTRACTION', 15.0);
+INSERT INTO operations (id_operation, type, cost) VALUES (next value for operations_seq, 'MULTIPLICATION', 20.0);
+INSERT INTO operations (id_operation, type, cost) VALUES (next value for operations_seq, 'DIVISION', 25.0);

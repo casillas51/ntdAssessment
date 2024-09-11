@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.admin.controller;
+package com.ntdsoftware.homework.casillas.integration.controller.admin;
 
 import com.jayway.jsonpath.JsonPath;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;

@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.user.controller;
+package com.ntdsoftware.homework.casillas.common.controller;
 
 import com.ntdsoftware.homework.casillas.common.controller.response.BasicResponse;
 
