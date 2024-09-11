@@ -1,6 +1,6 @@
 package com.ntdsoftware.homework.casillas.admin.service.impl;
 
-import static com.ntdsoftware.homework.casillas.common.ValidationUtils.validate;
+import static com.ntdsoftware.homework.casillas.common.utils.ValidationUtils.validation;
 
 import com.ntdsoftware.homework.casillas.admin.controller.request.QueryUserRequest;
 import com.ntdsoftware.homework.casillas.admin.controller.request.UserRequest;
@@ -16,7 +16,6 @@ import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.entity.specificationBuilder.UserSpecificationBuilder;
 import com.ntdsoftware.homework.casillas.common.enums.RolesEnum;
 import com.ntdsoftware.homework.casillas.common.enums.StatusEnum;
-import com.ntdsoftware.homework.casillas.common.exception.ApplicationException;
 import com.ntdsoftware.homework.casillas.common.exception.NoResultException;
 import com.ntdsoftware.homework.casillas.common.repository.RoleRepository;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
@@ -132,7 +131,7 @@ public class UserService implements IUserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
-        if (validate().isNullOrEmpty(userRequest.getUsername())) {
+        if (validation().isNullOrEmpty(userRequest.getUsername())) {
             log.error("Username is required");
             throw new UserNotFoundException();
         }

@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${application.api.version1.user}/balance")
 @Slf4j
-public class CommonBalanceRestController {
-
-    /** The UserService instance to handle user operations. */
-    private final IUserService userService;
+public class CommonBalanceRestController extends CommonController {
 
     /** The BalanceService instance to handle balance operations. */
     private final IBalanceService balanceService;
@@ -35,7 +32,7 @@ public class CommonBalanceRestController {
      * @param balanceService the BalanceService instance to handle balance operations
      */
     public CommonBalanceRestController(IUserService userService, IBalanceService balanceService) {
-        this.userService = userService;
+        super(userService);
         this.balanceService = balanceService;
     }
 
@@ -48,8 +45,7 @@ public class CommonBalanceRestController {
     @GetMapping
     public ResponseEntity<Double> getBalance(HttpServletRequest request) {
 
-        String userName = (String) request.getAttribute("userName");
-        int userId = userService.getUserId(userName);
+        int userId = getUserId(request);
 
         log.info("Get balance for user: {}", userId);
 
@@ -69,8 +65,7 @@ public class CommonBalanceRestController {
             @Valid @Min(value = 0, message = "Deposit amount must be greater than 0")
             @NotNull(message = "Deposit amount is required") double deposit) {
 
-        String userName = (String) request.getAttribute("userName");
-        int userId = userService.getUserId(userName);
+        int userId = getUserId(request);
 
         log.info("Deposit amount for user: {}", userId);
 
