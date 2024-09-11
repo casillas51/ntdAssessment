@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.admin.controller;
+package com.ntdsoftware.homework.casillas.integration.controller.admin;
 
 import com.ntdsoftware.homework.casillas.admin.controller.response.BalanceResponse;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the BalanceRestController class.
  * This class tests the various endpoints of the BalanceRestController to ensure they function correctly.
  */
-public class BalanceRestControllerTest extends AdminControllerConfig {
+public class AdminBalanceRestControllerTest extends AdminControllerConfig {
 
     /** Admin URL */
     @Value("${application.api.version1.admin}")

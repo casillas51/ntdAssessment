@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.user.controller;
+package com.ntdsoftware.homework.casillas.common.controller;
 
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
 import com.ntdsoftware.homework.casillas.common.service.IBalanceService;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${application.api.version1.user}/balance")
 @Slf4j
-public class UserBalanceRestController {
+public class CommonBalanceRestController {
 
     /** The UserService instance to handle user operations. */
     private final IUserService userService;
@@ -34,7 +34,7 @@ public class UserBalanceRestController {
      * @param userService the UserService instance to handle user operations
      * @param balanceService the BalanceService instance to handle balance operations
      */
-    public UserBalanceRestController(IUserService userService, IBalanceService balanceService) {
+    public CommonBalanceRestController(IUserService userService, IBalanceService balanceService) {
         this.userService = userService;
         this.balanceService = balanceService;
     }

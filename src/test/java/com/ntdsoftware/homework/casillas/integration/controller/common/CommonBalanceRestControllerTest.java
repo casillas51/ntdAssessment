@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.user.controller;
+package com.ntdsoftware.homework.casillas.integration.controller.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the UserBalanceRestController class.
  * This class tests the deposit endpoint of the UserBalanceRestController to ensure it functions correctly.
  */
-public class UserBalanceRestControllerTest extends UserControllerConfig {
+public class CommonBalanceRestControllerTest extends CommonControllerConfig {
 
     /** User URL */
     @Value("${application.api.version1.user}")
