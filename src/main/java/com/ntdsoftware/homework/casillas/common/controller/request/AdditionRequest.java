@@ -12,11 +12,15 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AdditionRequest {
 
-    /** The first term of the addition. */
+    /**
+     * The first term of the addition.
+     * */
     @NotNull(message = "Term 1 is required")
     private Double term1;
 
-    /** The second term of the addition. */
+    /**
+     * The second term of the addition.
+     * */
     @NotNull(message = "Term 2 is required")
     private Double term2;
 

@@ -28,4 +28,17 @@ public class AdditionRestControllerTest extends CommonControllerConfig {
                 .content("{\"term1\":\"10\",\"term2\":\"5\"}"))
                 .andExpect(status().isOk());
     }
+
+    /**
+     * Test for the addition operation with null values.
+     * @throws Exception - Exception
+     */
+    @Test
+    void whenAdditionWithNullValues_thenReturns400() throws Exception {
+        mockMvc.perform(post(URL + "/operation/addition")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"term1\":null,\"term2\":null}"))
+                .andExpect(status().isBadRequest());
+    }
 }
