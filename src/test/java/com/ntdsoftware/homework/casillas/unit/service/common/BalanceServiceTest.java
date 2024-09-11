@@ -1,11 +1,11 @@
-package com.ntdsoftware.homework.casillas.unit.common.service;
+package com.ntdsoftware.homework.casillas.unit.service.common;
 
 import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.exception.InvalidAmountException;
 import com.ntdsoftware.homework.casillas.common.exception.NotEnoughBalanceException;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
-import com.ntdsoftware.homework.casillas.common.service.impl.BalanceService;
+import com.ntdsoftware.homework.casillas.common.service.impl.BalanceServiceImpl;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -33,7 +33,7 @@ public class BalanceServiceTest implements ApplicationTest {
      * The BalanceService instance to test.
      */
     @InjectMocks
-    private BalanceService balanceService;
+    private BalanceServiceImpl balanceService;
 
     /**
      * Test getBalance method with valid user ID.
