@@ -3,11 +3,11 @@ package com.ntdsoftware.homework.casillas.common.controller;
 import com.ntdsoftware.homework.casillas.admin.service.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 
-public class CommonController {
+public class CommonRestController {
 
     protected final IUserService userService;
 
-    public CommonController(IUserService userService) {
+    public CommonRestController(IUserService userService) {
         this.userService = userService;
     }
 

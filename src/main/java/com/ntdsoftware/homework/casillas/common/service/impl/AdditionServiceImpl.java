@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AdditionServiceImpl implements IAdditionService {
 
+    /**
+     * The operation service to use for performing operations.
+     */
     private final IOperationService operationService;
 
     /**

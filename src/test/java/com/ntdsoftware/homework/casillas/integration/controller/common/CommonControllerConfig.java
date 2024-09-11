@@ -13,6 +13,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Common controller configuration.
+ */
 @AutoConfigureMockMvc
 public class CommonControllerConfig implements ApplicationTest {
 

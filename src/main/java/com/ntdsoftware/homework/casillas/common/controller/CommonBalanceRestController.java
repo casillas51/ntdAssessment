@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${application.api.version1.user}/balance")
 @Slf4j
-public class CommonBalanceRestController extends CommonController {
+public class CommonBalanceRestController extends CommonRestController {
 
     /** The BalanceService instance to handle balance operations. */
     private final IBalanceService balanceService;
