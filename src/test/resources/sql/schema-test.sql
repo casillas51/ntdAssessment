@@ -34,3 +34,10 @@ CREATE TABLE tokens (
         REFERENCES users (id_user),
     INDEX idx_token (token)
 );
+
+CREATE TABLE operations (
+    id_operation INT AUTO_INCREMENT,
+    type ENUM('ADDITION', 'SUBTRACTION', 'MULTIPLICATION', 'DIVISION') NOT NULL,
+    cost DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (id_operation)
+);
