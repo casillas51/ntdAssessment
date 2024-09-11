@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,6 +19,21 @@ public class UserBalanceRestControllerTest extends UserControllerConfig {
     private String URL;
 
     /**
+     * Test getting the balance.
+     * Expects a 200 OK status.
+     *
+     * @throws Exception if an error occurs during the test
+     */
+    @Test
+    void whenGetBalance_thenReturns200() throws Exception {
+
+        mockMvc.perform(get(URL + "/balance")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    /**
      * Test depositing a valid amount.
      * Expects a 200 OK status.
      *
@@ -27,7 +43,7 @@ public class UserBalanceRestControllerTest extends UserControllerConfig {
     void whenDepositWithValidDepositAmount_thenReturns200() throws Exception {
         double depositAmount = 10.0;
 
-        mockMvc.perform(put(URL + "/balance/deposit")
+        mockMvc.perform(put(URL + "/balance")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("deposit", String.valueOf(depositAmount)))
@@ -44,10 +60,11 @@ public class UserBalanceRestControllerTest extends UserControllerConfig {
     void whenDepositWithInvalidDepositAmount_thenReturns400() throws Exception {
         double depositAmount = -10.0;
 
-        mockMvc.perform(put(URL + "/balance/deposit")
+        mockMvc.perform(put(URL + "/balance")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("deposit", String.valueOf(depositAmount)))
                 .andExpect(status().isBadRequest());
     }
+
 }

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,13 +40,31 @@ public class UserBalanceRestController {
     }
 
     /**
+     * Retrieves the balance for a user.
+     *
+     * @param request the HttpServletRequest containing the user information
+     * @return a ResponseEntity containing the user's balance
+     */
+    @GetMapping
+    public ResponseEntity<Double> getBalance(HttpServletRequest request) {
+
+        String userName = (String) request.getAttribute("userName");
+        int userId = userService.getUserId(userName);
+
+        log.info("Get balance for user: {}", userId);
+
+        Double response = balanceService.getBalance(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Deposits an amount into the balance for a user.
      *
      * @param request the HttpServletRequest containing the user information
      * @param deposit the amount to be deposited
      * @return a ResponseEntity containing the updated balance
      */
-    @PutMapping("/deposit")
+    @PutMapping
     public ResponseEntity<Double> deposit(HttpServletRequest request,
             @Valid @Min(value = 0, message = "Deposit amount must be greater than 0")
             @NotNull(message = "Deposit amount is required") double deposit) {
@@ -58,4 +77,5 @@ public class UserBalanceRestController {
         Double response = balanceService.deposit(userId, deposit);
         return ResponseEntity.ok(response);
     }
+
 }
