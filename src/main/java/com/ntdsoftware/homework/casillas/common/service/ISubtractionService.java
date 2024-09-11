@@ -1,27 +1,27 @@
 package com.ntdsoftware.homework.casillas.common.service;
 
-import com.ntdsoftware.homework.casillas.common.controller.request.AdditionRequest;
+import com.ntdsoftware.homework.casillas.common.controller.request.SubtractionRequest;
 import com.ntdsoftware.homework.casillas.common.controller.response.OperationResultResponse;
 import com.ntdsoftware.homework.casillas.common.enums.OperationTypeEnum;
 import com.ntdsoftware.homework.casillas.common.exception.ArithmeticOperationException;
 
 /**
- * Service interface for addition operations.
+ * Service interface for subtraction operations.
  */
-public interface IAdditionService {
+public interface ISubtractionService {
 
     /**
      * The type of operation this service handles.
      */
-    OperationTypeEnum operationType = OperationTypeEnum.ADDITION;
+    OperationTypeEnum operationType = OperationTypeEnum.SUBTRACTION;
 
     /**
-     * Performs an addition operation.
+     * Performs a subtraction operation.
      *
      * @param userId the ID of the user performing the operation
-     * @param additionRequest the request object containing the terms to be added
-     * @return the result of the addition operation
+     * @param subtractionRequest the request object containing the minuend and subtrahend
+     * @return the result of the subtraction operation
      * @throws ArithmeticOperationException if any of the input values are null
      */
-    OperationResultResponse add(int userId, AdditionRequest additionRequest);
+    OperationResultResponse subtract(int userId, SubtractionRequest subtractionRequest);
 }

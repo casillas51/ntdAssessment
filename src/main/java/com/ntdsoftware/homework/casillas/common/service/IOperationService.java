@@ -1,7 +1,6 @@
 package com.ntdsoftware.homework.casillas.common.service;
 
 import com.ntdsoftware.homework.casillas.common.controller.response.OperationResultResponse;
-import com.ntdsoftware.homework.casillas.common.entity.Operation;
 import com.ntdsoftware.homework.casillas.common.enums.OperationTypeEnum;
 
 /**
@@ -18,4 +17,5 @@ public interface IOperationService {
      * @return the result of the operation
      */
     OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType);
+
 }
