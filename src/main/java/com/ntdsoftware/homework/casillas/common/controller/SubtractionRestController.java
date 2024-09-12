@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SubtractionRestController extends CommonRestController {
 
+    /**
+     * The subtraction service to use for performing subtraction operations.
+     */
     private final ISubtractionService subtractionService;
 
     /**
