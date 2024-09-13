@@ -45,7 +45,7 @@ public class AdditionServiceImpl implements IAdditionService {
         Double term2 = additionRequest.getTerm2();
 
         OperationResultResponse response = operationService.performOperationBalance(userId, operationType);
-        response.setResult(add(term1, term2));
+        response.setDoubleResult(add(term1, term2));
 
         log.info("Performed addition operation for user: {} with terms: {} and {}", userId, term1, term2);
 

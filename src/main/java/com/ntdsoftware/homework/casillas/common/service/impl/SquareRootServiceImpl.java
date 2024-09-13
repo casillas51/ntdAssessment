@@ -9,6 +9,7 @@ import com.ntdsoftware.homework.casillas.common.service.IOperationService;
 import com.ntdsoftware.homework.casillas.common.service.ISquareRootService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of the ISquareRootService interface.
@@ -33,6 +34,7 @@ public class SquareRootServiceImpl implements ISquareRootService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public OperationResultResponse squareRoot(int userId, SquareRootRequest request) {
 
         if (validation().containsNullValues(userId, request.getRadicand())) {
@@ -46,7 +48,7 @@ public class SquareRootServiceImpl implements ISquareRootService {
         Double radicand = request.getRadicand();
 
         OperationResultResponse response = operationService.performOperationBalance(userId, operationType);
-        response.setResult(squareRoot(radicand));
+        response.setDoubleResult(squareRoot(radicand));
 
         log.info("Performed square root operation for user: {} with radicand: {}", userId, radicand);
 

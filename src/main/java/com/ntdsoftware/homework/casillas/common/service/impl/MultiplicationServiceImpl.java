@@ -34,7 +34,7 @@ public class MultiplicationServiceImpl implements IMultiplicationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public OperationResultResponse multiply(int idUser, MultiplicationRequest request) {
 
         if(validation().containsNullValues(idUser, request.getMultiplicand(), request.getMultiplier())) {
@@ -45,7 +45,7 @@ public class MultiplicationServiceImpl implements IMultiplicationService {
         Double multiplier = request.getMultiplier();
 
         OperationResultResponse response = operationService.performOperationBalance(idUser, operationType);
-        response.setResult(multiply(multiplicand, multiplier));
+        response.setDoubleResult(multiply(multiplicand, multiplier));
 
         log.info("Performed multiplication operation for user: {} with multiplicand: {} and multiplier: {}", idUser, multiplicand, multiplier);
 

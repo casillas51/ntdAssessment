@@ -45,7 +45,7 @@ public class SubtractionServiceImpl implements ISubtractionService {
         Double subtrahend = subtractionRequest.getSubtrahend();
 
         OperationResultResponse response = operationService.performOperationBalance(userId, operationType);
-        response.setResult(subtract(minuend, subtrahend));
+        response.setDoubleResult(subtract(minuend, subtrahend));
 
         log.info("Performed subtraction operation for user: {} with minuend: {} and subtrahend: {}", userId, minuend, subtrahend);
 
