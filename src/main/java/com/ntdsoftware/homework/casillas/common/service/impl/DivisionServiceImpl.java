@@ -9,6 +9,7 @@ import com.ntdsoftware.homework.casillas.common.service.IDivisionService;
 import com.ntdsoftware.homework.casillas.common.service.IOperationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of the IDivisionService interface.
@@ -33,6 +34,7 @@ public class DivisionServiceImpl implements IDivisionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public OperationResultResponse divide(int accountId, DivisionRequest request) {
 
         if (validation().containsNullValues(accountId, request.getDividend(), request.getDivisor())) {
@@ -47,7 +49,7 @@ public class DivisionServiceImpl implements IDivisionService {
         Double divisor = request.getDivisor();
 
         OperationResultResponse response = operationService.performOperationBalance(accountId, operationType);
-        response.setResult(divide(dividend, divisor));
+        response.setDoubleResult(divide(dividend, divisor));
 
         log.info("Performed division operation for user: {} with dividend: {} and divisor: {}", accountId, dividend, divisor);
 

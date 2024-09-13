@@ -10,13 +10,23 @@ spring:
     use-code-as-default-message: false
   profiles:
     active: Development
-
 application:
   api:
     version1:
       auth:  "/api/v1/auth"
       admin: "/api/v1/admin"
       user:  "/api/v1/user"
+  random:
+    "url": https://api.random.org/json-rpc/4/invoke
+    "json-rpc": 2.0
+    "method": generateStrings
+    "params":
+      "apiKey": 0739005b-6724-4315-9438-5e89d89ba7b7
+      "n": 1
+      "length": 32
+      "characters": ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+      "replacement": true
+    "id": 1
 
 # 'Development' profile
 ---
@@ -60,6 +70,19 @@ logging:
       springframework:
         security: DEBUG
     web: DEBUG
+random:
+  org:
+    api:
+      "url": https://api.random.org/json-rpc/4/invoke
+      "json-rpc": 2.0
+      "method": generateStrings
+      "params":
+        "apiKey": 0739005b-6724-4315-9438-5e89d89ba7b7
+        "n": 1
+        "length": 32
+        "characters": ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+        "replacement": true
+      "id": 1
 
 # 'Test' profile
 ---

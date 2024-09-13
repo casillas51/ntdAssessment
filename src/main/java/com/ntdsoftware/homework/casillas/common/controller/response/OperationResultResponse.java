@@ -16,11 +16,21 @@ public class OperationResultResponse {
     private OperationTypeEnum operationType;
 
     /** The result of the operation. */
-    private Double result;
+    private String result;
 
     /** The remaining balance after the operation. */
     private Double balance;
 
     /** The cost of the operation. */
     private Double cost;
+
+    /**
+     * Sets the result of the operation as a numeric value.
+     *
+     * @param numericResult the numeric result of the operation
+     */
+    public void setDoubleResult(Double numericResult) {
+        this.result = String.valueOf(numericResult);
+    }
+
 }
