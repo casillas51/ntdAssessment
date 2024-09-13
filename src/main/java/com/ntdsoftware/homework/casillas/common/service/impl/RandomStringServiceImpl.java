@@ -48,8 +48,8 @@ public class RandomStringServiceImpl implements IRandomStringService {
     @Transactional(rollbackFor = Exception.class)
     public OperationResultResponse randomString(int idUser) {
 
-        OperationResultResponse response = operationService.performOperationBalance(idUser, operationType);
-        response.setResult(randomString());
+        String result = randomString();
+        OperationResultResponse response = operationService.performOperationBalance(idUser, operationType, result);
 
         log.info("Performed random string operation for user: {}", idUser);
 

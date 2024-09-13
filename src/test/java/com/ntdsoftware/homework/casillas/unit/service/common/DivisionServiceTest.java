@@ -41,15 +41,15 @@ public class DivisionServiceTest implements ApplicationTest {
     @Test
     void whenDivide_thenPerformDivision() {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.DIVISION)
-                .setCost(10.0).setBalance(100.0);
+                .setCost(10.0).setBalance(100.0).setResult("5.0");
         DivisionRequest request = new DivisionRequest().setDividend(10.0).setDivisor(2.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), any(Double.class))).thenReturn(response);
 
         OperationResultResponse result = divisionService.divide(1, request);
 
         assertEquals(OperationTypeEnum.DIVISION, result.getOperationType());
-        assertEquals(5.0, result.getResult());
+        assertEquals("5.0", result.getResult());
     }
 
     /**

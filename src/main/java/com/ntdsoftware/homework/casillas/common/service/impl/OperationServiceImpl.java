@@ -7,6 +7,7 @@ import com.ntdsoftware.homework.casillas.common.exception.OperationTypeNotFoundE
 import com.ntdsoftware.homework.casillas.common.repository.OperationRepository;
 import com.ntdsoftware.homework.casillas.common.service.IBalanceService;
 import com.ntdsoftware.homework.casillas.common.service.IOperationService;
+import com.ntdsoftware.homework.casillas.common.service.IRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class OperationServiceImpl implements IOperationService {
     private final OperationRepository operationRepository;
 
     /**
+     * The RecordService instance to handle record operations.
+     */
+    private final IRecordService recordService;
+
+    /**
      * The BalanceService instance to handle balance operations.
      */
     private final IBalanceService balanceService;
@@ -34,18 +40,30 @@ public class OperationServiceImpl implements IOperationService {
      * @param operationRepository the OperationRepository instance to handle operation data
      * @param balanceService      the BalanceService instance to handle balance operations
      */
-    public OperationServiceImpl(OperationRepository operationRepository, IBalanceService balanceService) {
+    public OperationServiceImpl(OperationRepository operationRepository,
+                                IRecordService recordService, IBalanceService balanceService) {
         this.operationRepository = operationRepository;
+        this.recordService = recordService;
         this.balanceService = balanceService;
     }
 
     @Override
-    public OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType) {
+    public OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType, Double result) {
+        return performOperationBalance(userId, operationType, String.valueOf(result));
+    }
+
+    @Override
+    public OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType, String result) {
 
         Double cost = getOperationCost(userId, operationType);
         Double balance = balanceService.withdraw(userId, cost);
 
-        return new OperationResultResponse().setOperationType(operationType).setBalance(balance).setCost(cost);
+        OperationResultResponse response = new OperationResultResponse().setOperationType(operationType)
+                .setBalance(balance).setCost(cost).setResult(result);
+
+        recordService.createRecord(userId, response);
+
+        return response;
     }
 
     /**

@@ -37,15 +37,15 @@ public class AdditionServiceImpl implements IAdditionService {
     @Transactional(rollbackFor = Exception.class)
     public OperationResultResponse add(int userId, AdditionRequest additionRequest) {
 
-        if(validation().containsNullValues(userId, additionRequest.getTerm1(), additionRequest.getTerm2())) {
+        if (validation().containsNullValues(userId, additionRequest.getTerm1(), additionRequest.getTerm2())) {
             throw new ArithmeticOperationException("Cannot perform addition with null values");
         }
 
         Double term1 = additionRequest.getTerm1();
         Double term2 = additionRequest.getTerm2();
+        Double result = add(term1, term2);
 
-        OperationResultResponse response = operationService.performOperationBalance(userId, operationType);
-        response.setDoubleResult(add(term1, term2));
+        OperationResultResponse response = operationService.performOperationBalance(userId, operationType, result);
 
         log.info("Performed addition operation for user: {} with terms: {} and {}", userId, term1, term2);
 

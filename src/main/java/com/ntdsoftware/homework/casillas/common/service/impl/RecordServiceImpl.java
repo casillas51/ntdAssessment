@@ -8,6 +8,7 @@ import com.ntdsoftware.homework.casillas.common.repository.RecordRepository;
 import com.ntdsoftware.homework.casillas.common.service.ICommonService;
 import com.ntdsoftware.homework.casillas.common.service.IRecordService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 
@@ -19,6 +20,7 @@ import java.sql.Timestamp;
  * @see RecordRepository
  * @see ICommonService
  */
+@Service
 @Slf4j
 public class RecordServiceImpl implements IRecordService {
 

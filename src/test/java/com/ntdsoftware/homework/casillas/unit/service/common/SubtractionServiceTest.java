@@ -41,15 +41,15 @@ public class SubtractionServiceTest implements ApplicationTest {
     @Test
     void whenSubtract_thenPerformSubtraction() {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.SUBTRACTION)
-                .setCost(10.0).setBalance(100.0);
+                .setCost(10.0).setBalance(100.0).setResult("5.0");
         SubtractionRequest request = new SubtractionRequest().setMinuend(10.0).setSubtrahend(5.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), any(Double.class))).thenReturn(response);
 
         OperationResultResponse result = subtractionService.subtract(1, request);
 
         assertEquals(OperationTypeEnum.SUBTRACTION, result.getOperationType());
-        assertEquals(5.0, result.getResult());
+        assertEquals("5.0", result.getResult());
     }
 
     /**
