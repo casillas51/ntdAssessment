@@ -87,6 +87,11 @@ public class RecordServiceImpl implements IRecordService {
 
         List<Record> recordList = recordRepository.findAll();
 
+        if (recordList.isEmpty()) {
+            log.info("There are no records to return.");
+            throw new NoResultException();
+        }
+
         List<RecordResponse> recordResponseList = recordList.stream()
                 .map(Record::mapToResponse)
                 .toList();
@@ -124,7 +129,7 @@ public class RecordServiceImpl implements IRecordService {
         Page<Record> records = (null != specification) ? recordRepository.findAll(specification, pageable) : recordRepository.findAll(pageable);
 
         if (records.getNumberOfElements() < 1) {
-            log.info("No records found.");
+            log.info("No records found with current search options: {}.", queryRequest.getQuery());
             throw new NoResultException();
         }
 
