@@ -48,6 +48,12 @@ public class CommonServiceImpl implements ICommonService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+    }
+
+    @Override
     public User updateUser(User user) {
         return userRepository.save(user);
     }

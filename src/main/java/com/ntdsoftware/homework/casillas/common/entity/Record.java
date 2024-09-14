@@ -1,5 +1,6 @@
 package com.ntdsoftware.homework.casillas.common.entity;
 
+import com.ntdsoftware.homework.casillas.common.controller.response.RecordResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -72,5 +73,22 @@ public class Record {
      */
     @Column(name = "deleted", nullable = false)
     private Boolean deleted = Boolean.FALSE;
+
+    /**
+     * Maps the record to a RecordResponse object.
+     *
+     * @return the RecordResponse object
+     */
+    public RecordResponse mapToResponse() {
+        return new RecordResponse()
+                .setRecordId(id)
+                .setUserName(user.getUsername())
+                .setOperation(operation.getOperationType().name())
+                .setAmount(amount)
+                .setUserBalance(userBalance)
+                .setResponse(operationResponse)
+                .setDate(date)
+                .setIsDeleted(deleted);
+    }
 
 }

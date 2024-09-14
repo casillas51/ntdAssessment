@@ -22,6 +22,15 @@ public interface ICommonService {
     User getUserById(int userId);
 
     /**
+     * Retrieves the User instance with the given username.
+     *
+     * @param username the username of the user to retrieve
+     * @return the User instance
+     * @throws UserNotFoundException if the user with the given username is not found
+     */
+    User getUserByUsername(String username);
+
+    /**
      * Updates the given User instance in the database.
      *
      * @param user the User instance to update
