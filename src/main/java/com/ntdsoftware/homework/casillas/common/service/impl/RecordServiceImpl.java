@@ -9,6 +9,7 @@ import com.ntdsoftware.homework.casillas.common.entity.Record;
 import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.entity.specificationBuilder.RecordSpecificationBuilder;
 import com.ntdsoftware.homework.casillas.common.enums.OperationTypeEnum;
+import com.ntdsoftware.homework.casillas.common.exception.InvalidUsernameException;
 import com.ntdsoftware.homework.casillas.common.exception.NoResultException;
 import com.ntdsoftware.homework.casillas.common.exception.RecordNotFoundException;
 import com.ntdsoftware.homework.casillas.common.repository.RecordRepository;
@@ -135,6 +136,22 @@ public class RecordServiceImpl implements IRecordService {
 
         log.info("Records retrieved: {} in total page(s): {}", records.getTotalElements(), records.getTotalPages());
         return records.map(Record::mapToResponse);
+    }
+
+    @Override
+    public Page<RecordResponse> searchUserRecords(int idUser, DataQueryRequest<QueryRecordRequest> queryRequest) {
+
+        User user = commonService.getUserById(idUser);
+
+        if (null != queryRequest.getQuery().getUserName() &&
+                !queryRequest.getQuery().getUserName().equals(user.getUsername())) {
+
+            throw new InvalidUsernameException(user.getUsername());
+        }
+
+        queryRequest.getQuery().setUserName(user.getUsername());
+
+        return searchRecords(queryRequest);
     }
 
     @Override

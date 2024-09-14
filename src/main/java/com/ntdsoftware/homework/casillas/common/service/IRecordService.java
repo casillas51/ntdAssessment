@@ -38,6 +38,15 @@ public interface IRecordService {
     Page<RecordResponse> searchRecords(DataQueryRequest<QueryRecordRequest> queryRequest);
 
     /**
+     * Searches for records of a specific user based on the given query request.
+     *
+     * @param idUser the ID of the user
+     * @param queryRequest the query request
+     * @return a page of records matching the query
+     */
+    Page<RecordResponse> searchUserRecords(int idUser, DataQueryRequest<QueryRecordRequest> queryRequest);
+
+    /**
      * Deletes a record with the given ID.
      *
      * @param recordId the ID of the record to be deleted

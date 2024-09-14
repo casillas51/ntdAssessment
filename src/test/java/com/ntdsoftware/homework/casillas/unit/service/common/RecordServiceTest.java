@@ -218,6 +218,47 @@ public class RecordServiceTest implements ApplicationTest {
      * Tests that an exception is thrown when a record is deleted with an invalid record id.
      */
     @Test
+    void whenSearchUserRecords_thenRecordsAreRetrieved() throws IOException {
+
+        prepareRecordRequest();
+
+        QueryRecordRequest queryRecordRequest = new QueryRecordRequest().setUserName("test").setOperation("ADDITION")
+                .setAmount(10.0).setUserBalance(100.0).setResponse("Success");
+        DataQueryRequest<QueryRecordRequest> queryRequest = new DataQueryRequest<>();
+        queryRequest.setQuery(queryRecordRequest).setPage(1).setSize(10);
+        User user = new User().setId(1).setUsername("test");
+        Operation operation = new Operation().setId(1).setOperationType(OperationTypeEnum.ADDITION);
+
+        when(commonService.getUserById(1)).thenReturn(user);
+        when(commonService.getOperationByType(OperationTypeEnum.ADDITION)).thenReturn(operation);
+
+        Page<RecordResponse> recordResponses = recordService.searchUserRecords(1, queryRequest);
+
+        assertNotNull(recordResponses);
+        assertEquals(3, recordResponses.getTotalElements());
+        assertTrue(recordResponses.hasContent());
+    }
+
+    /**
+     * Tests that an exception is thrown when no records are found with the provided search filters.
+     */
+    @Test
+    void whenSearchUserRecordsWithDifferentUser_thenThrowException() {
+
+        QueryRecordRequest queryRecordRequest = new QueryRecordRequest().setUserName("other");
+        DataQueryRequest<QueryRecordRequest> queryRequest = new DataQueryRequest<>();
+        queryRequest.setQuery(queryRecordRequest).setPage(1).setSize(10);
+
+        User user = new User().setId(1).setUsername("test");
+        when(commonService.getUserById(1)).thenReturn(user);
+
+        assertThrows(ApplicationException.class, () -> recordService.searchUserRecords(1, queryRequest));
+    }
+
+    /**
+     * Tests that an exception is thrown when a record is deleted with an invalid record id.
+     */
+    @Test
     void whenDeleteRecordWithNotExistingRecord_thenRecordIsNotDeleted() {
         when(recordRepository.findById(1)).thenReturn(java.util.Optional.empty());
 
