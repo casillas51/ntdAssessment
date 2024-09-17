@@ -141,7 +141,7 @@ public class UserServiceTest implements ApplicationTest {
      * Get a user with existing user id
      */
     @Test
-    void whenGetUserWithExistingUserId_thenReturnUserResponse() {
+    void whenGetUserByIdWithExistingUserId_thenReturnUserResponse() {
 
         Role role = new Role().setId(1).setRole(RolesEnum.ADMIN);
         User user = new User().setId(100).setUsername("test").setPassword("test").setRole(role).setStatus(StatusEnum.ACTIVE);
@@ -155,10 +155,41 @@ public class UserServiceTest implements ApplicationTest {
      * Get a user with not existing user id
      */
     @Test
-    void whenGetUserWithNotExistingUserId_thenThrowException() {
+    void whenGetUserByIdWithNotExistingUserId_thenThrowException() {
 
         when(userRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
         assertThrows(ApplicationException.class, () -> userService.getUserById(100));
+    }
+
+    /**
+     * Get a user id from existing username
+     */
+    @Test
+    void whenGetUserIdWithExistingUserName_thenReturnUserId() {
+
+        User user = new User().setId(100).setUsername("test").setPassword("test").setRole(new Role()).setStatus(StatusEnum.ACTIVE);
+
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
+
+        assertEquals(userService.getUserId("test"), 100);
+    }
+
+    /**
+     * Get a user id with not existing username
+     */
+    @Test
+    void whenGetUserIdWithNotExistingUserName_thenThrowException() {
+
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+        assertThrows(ApplicationException.class, () -> userService.getUserId("test"));
+    }
+
+    /**
+     * Get a user id with null username
+     */
+    @Test
+    void whenGetUserIdWithNullUserName_thenThrowException() {
+        assertThrows(ApplicationException.class, () -> userService.getUserId(null));
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.controller.common;
+package com.ntdsoftware.homework.casillas.integration.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,7 @@ public class RandomStringRestControllerTest extends CommonControllerConfig {
 
     /** User URL */
     @Value("${application.api.version1.user}")
-    private String URL;
+    protected String URL;
 
     /**
      * Test for the random string operation.

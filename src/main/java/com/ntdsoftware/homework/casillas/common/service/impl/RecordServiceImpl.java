@@ -158,9 +158,10 @@ public class RecordServiceImpl implements IRecordService {
     public void deleteRecord(int recordId) {
         Record record = recordRepository.findById(recordId)
                 .orElseThrow(() -> new RecordNotFoundException(recordId));
-
         record.setDeleted(true);
+
         recordRepository.saveAndFlush(record);
+        log.info("Record has ben deleted: {}", record);
     }
 
     @Override
@@ -171,6 +172,7 @@ public class RecordServiceImpl implements IRecordService {
 
         record.setDeleted(true);
         recordRepository.saveAndFlush(record);
+        log.info("User's record has been deleted: {}", record);
     }
 
 }

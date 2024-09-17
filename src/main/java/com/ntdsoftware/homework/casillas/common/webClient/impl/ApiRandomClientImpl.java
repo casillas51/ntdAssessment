@@ -87,6 +87,11 @@ public class ApiRandomClientImpl implements IApiRandomClient {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Generate random string.
+     *
+     * @return the generate string response
+     */
     @Override
     public GenerateStringResponse generateString() {
 

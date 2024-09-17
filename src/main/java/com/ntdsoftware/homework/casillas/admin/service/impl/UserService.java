@@ -115,10 +115,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int getUserId(String userName) {
+    public int getUserId(String username) {
 
-        User user = userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UserNotFoundException(userName));
+        if (validation().isNullOrEmpty(username)) {
+            log.error("Username cannot be null or empty");
+            throw new UserNotFoundException();
+        }
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
 
         log.info("User {} retrieved", user.getUsername());
 
