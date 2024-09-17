@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "operation": {
+      "id": 1,
+      "operationType": "ADDITION",
+      "cost": 1.0
+    },
+    "user": {
+      "id": 1,
+      "username": "Test",
+      "balance": 36.5,
+      "status": "ACTIVE",
+      "createdDate": "2024-08-24T00:13:07.000+00:00",
+      "role": {
+        "id": 2,
+        "role": "USER"
+      },
+      "deleted": false
+    },
+    "amount": 1.0,
+    "userBalance": 36.5,
+    "operationResponse": "7.3",
+    "date": "2024-09-14T04:55:06.000+00:00",
+    "isDeleted": false
+  },
+  {
+    "id": 2,
+    "operation": {
+      "id": 2,
+      "operationType": "SUBTRACTION",
+      "cost": 1.0
+    },
+    "user": {
+      "id": 1,
+      "username": "Test",
+      "balance": 36.5,
+      "status": "ACTIVE",
+      "createdDate": "2024-08-24T00:13:07.000+00:00",
+      "role": {
+        "id": 2,
+        "role": "USER"
+      },
+      "deleted": false
+    },
+    "amount": 1.0,
+    "userBalance": 35.5,
+    "operationResponse": "7.1",
+    "date": "2024-09-14T04:55:06.000+00:00",
+    "isDeleted": false
+  },
+  {
+    "id": 3,
+    "operation": {
+      "id": 1,
+      "operationType": "ADDITION",
+      "cost": 1.0
+    },
+    "user": {
+      "id": 1,
+      "username": "Test",
+      "balance": 35.5,
+      "status": "ACTIVE",
+      "createdDate": "2024-08-24T00:13:07.000+00:00",
+      "role": {
+        "id": 2,
+        "role": "USER"
+      },
+      "deleted": false
+    },
+    "amount": 1.0,
+    "userBalance": 36.5,
+    "operationResponse": "7.3",
+    "date": "2024-09-14T04:55:06.000+00:00",
+    "isDeleted": false
+  }
+]

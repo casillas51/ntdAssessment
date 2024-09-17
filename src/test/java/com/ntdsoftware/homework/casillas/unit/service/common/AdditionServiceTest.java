@@ -41,15 +41,15 @@ public class AdditionServiceTest implements ApplicationTest {
     @Test
     void whenAdd_thenPerformAddition() {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.ADDITION)
-                        .setCost(10.0).setBalance(100.0);
+                        .setCost(10.0).setBalance(100.0).setResult("15.0");
         AdditionRequest additionRequest = new AdditionRequest().setTerm1(10.0).setTerm2(5.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), any(Double.class))).thenReturn(response);
 
         OperationResultResponse result = additionService.add(1, additionRequest);
 
         assertEquals(OperationTypeEnum.ADDITION, result.getOperationType());
-        assertEquals(15.0, result.getResult());
+        assertEquals("15.0", result.getResult());
     }
 
     /**

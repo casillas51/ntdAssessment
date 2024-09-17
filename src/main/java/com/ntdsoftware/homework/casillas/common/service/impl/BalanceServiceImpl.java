@@ -1,11 +1,11 @@
 package com.ntdsoftware.homework.casillas.common.service.impl;
 
-import com.ntdsoftware.homework.casillas.admin.exception.UserNotFoundException;
 import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.exception.InvalidAmountException;
 import com.ntdsoftware.homework.casillas.common.exception.NotEnoughBalanceException;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
 import com.ntdsoftware.homework.casillas.common.service.IBalanceService;
+import com.ntdsoftware.homework.casillas.common.service.ICommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +25,15 @@ public class BalanceServiceImpl implements IBalanceService {
     /**
      * The UserRepository instance to interact with the database.
      */
-    private final UserRepository userRepository;
+    private final ICommonService commonService;
 
     /**
      * Constructs a new BalanceService with the given UserRepository.
      *
-     * @param userRepository the UserRepository instance to interact with the database
+     * @param commonService the CommonService instance to interact with the database
      */
-    public BalanceServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public BalanceServiceImpl(ICommonService commonService) {
+        this.commonService = commonService;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BalanceServiceImpl implements IBalanceService {
 
         log.info("Get balance for user with ID: {}", userId);
 
-        User user = getUser(userId);
+        User user = commonService.getUserById(userId);
         return user.getBalance();
     }
 
@@ -51,9 +51,9 @@ public class BalanceServiceImpl implements IBalanceService {
         validateAmount(amount);
         log.info("Update balance for user with ID: {} by amount: {}", userId, amount);
 
-        User user = getUser(userId);
+        User user = commonService.getUserById(userId);
         user.setBalance(amount);
-        user = userRepository.save(user);
+        user = commonService.updateUser(user);
 
         log.info("Balance updated successfully");
         return user.getBalance();
@@ -65,9 +65,9 @@ public class BalanceServiceImpl implements IBalanceService {
         validateAmount(amount);
         log.info("Deposit amount: {} for user with ID: {}", amount, userId);
 
-        User user = getUser(userId);
+        User user = commonService.getUserById(userId);
         user.setBalance(user.getBalance() + amount);
-        user = userRepository.save(user);
+        user = commonService.updateUser(user);
 
         log.info("Amount deposited successfully");
         return user.getBalance();
@@ -80,7 +80,7 @@ public class BalanceServiceImpl implements IBalanceService {
 
         User user = verifyEnoughBalance(userId, amount);
         user.setBalance(user.getBalance() - amount);
-        user = userRepository.save(user);
+        user = commonService.updateUser(user);
 
         log.info("Amount withdrawn successfully");
         return user.getBalance();
@@ -106,7 +106,7 @@ public class BalanceServiceImpl implements IBalanceService {
     private User verifyEnoughBalance(int userId, double amount) {
 
         validateAmount(amount);
-        User user = getUser(userId);
+        User user = commonService.getUserById(userId);
 
         if (user.getBalance() >= amount) {
             log.info("User has enough balance");
@@ -115,18 +115,6 @@ public class BalanceServiceImpl implements IBalanceService {
 
         log.info("User does not have enough balance");
         throw new NotEnoughBalanceException();
-    }
-
-    /**
-     * Retrieves the User instance with the given ID.
-     *
-     * @param userId the ID of the user to retrieve
-     * @return the User instance
-     * @throws UserNotFoundException if the user with the given ID is not found
-     */
-    private User getUser(int userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(String.valueOf(userId)));
     }
 
     /**
@@ -140,4 +128,5 @@ public class BalanceServiceImpl implements IBalanceService {
             throw new InvalidAmountException();
         }
     }
+
 }

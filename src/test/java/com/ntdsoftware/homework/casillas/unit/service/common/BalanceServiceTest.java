@@ -5,6 +5,7 @@ import com.ntdsoftware.homework.casillas.common.entity.User;
 import com.ntdsoftware.homework.casillas.common.exception.InvalidAmountException;
 import com.ntdsoftware.homework.casillas.common.exception.NotEnoughBalanceException;
 import com.ntdsoftware.homework.casillas.common.repository.UserRepository;
+import com.ntdsoftware.homework.casillas.common.service.ICommonService;
 import com.ntdsoftware.homework.casillas.common.service.impl.BalanceServiceImpl;
 import com.ntdsoftware.homework.casillas.configuration.ApplicationTest;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class BalanceServiceTest implements ApplicationTest {
      * The UserRepository mock instance.
      */
     @Mock
-    private UserRepository userRepository;
+    private ICommonService commonService;
 
     /**
      * The BalanceService instance to test.
@@ -42,7 +43,7 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenGetBalanceWithValidUserId_thenReturnBalance() {
         User user = new User();
         user.setBalance(100.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+        when(commonService.getUserById(anyInt())).thenReturn(user);
 
         double balance = balanceService.getBalance(1);
         assertEquals(100.0, balance);
@@ -53,7 +54,7 @@ public class BalanceServiceTest implements ApplicationTest {
      */
     @Test
     void whenGetBalanceWithInvalidUserId_thenThrowException() {
-        when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
+        when(commonService.getUserById(anyInt())).thenThrow(new UserNotFoundException());
 
         assertThrows(UserNotFoundException.class, () -> balanceService.getBalance(1));
     }
@@ -65,8 +66,8 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenUpdateBalanceWithValidAmount_thenReturnUpdatedBalance() {
         User user = new User();
         user.setBalance(100.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(commonService.getUserById(anyInt())).thenReturn(user);
+        when(commonService.updateUser(any(User.class))).thenReturn(user);
 
         double updatedBalance = balanceService.updateBalance(1, 200.0);
         assertEquals(200.0, updatedBalance);
@@ -87,8 +88,8 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenDepositWithValidAmount_thenReturnUpdatedBalance() {
         User user = new User();
         user.setBalance(100.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(commonService.getUserById(anyInt())).thenReturn(user);
+        when(commonService.updateUser(any(User.class))).thenReturn(user);
 
         double updatedBalance = balanceService.deposit(1, 50.0);
         assertEquals(150.0, updatedBalance);
@@ -109,8 +110,8 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenWithdrawWithValidAmount_thenReturnUpdatedBalance() {
         User user = new User();
         user.setBalance(100.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(commonService.getUserById(anyInt())).thenReturn(user);
+        when(commonService.updateUser(any(User.class))).thenReturn(user);
 
         double updatedBalance = balanceService.withdraw(1, 50.0);
         assertEquals(50.0, updatedBalance);
@@ -131,7 +132,7 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenWithdrawWithNotEnoughBalance_thenThrowException() {
         User user = new User();
         user.setBalance(50.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+        when(commonService.getUserById(anyInt())).thenReturn(user);
 
         assertThrows(NotEnoughBalanceException.class, () -> balanceService.withdraw(1, 100.0));
     }
@@ -143,7 +144,7 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenHasEnoughBalanceWithEnoughBalance_thenReturnTrue() {
         User user = new User();
         user.setBalance(100.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+        when(commonService.getUserById(anyInt())).thenReturn(user);
 
         assertTrue(balanceService.hasEnoughBalance(1, 50.0));
     }
@@ -155,7 +156,7 @@ public class BalanceServiceTest implements ApplicationTest {
     void whenHasEnoughBalanceWithNotEnoughBalance_thenThrowException() {
         User user = new User();
         user.setBalance(50.0);
-        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+        when(commonService.getUserById(anyInt())).thenReturn(user);
 
         assertThrows(NotEnoughBalanceException.class, () -> balanceService.hasEnoughBalance(1, 100.0));
     }

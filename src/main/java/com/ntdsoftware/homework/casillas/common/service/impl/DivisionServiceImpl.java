@@ -47,9 +47,9 @@ public class DivisionServiceImpl implements IDivisionService {
 
         Double dividend = request.getDividend();
         Double divisor = request.getDivisor();
+        Double result = divide(dividend, divisor);
 
-        OperationResultResponse response = operationService.performOperationBalance(accountId, operationType);
-        response.setDoubleResult(divide(dividend, divisor));
+        OperationResultResponse response = operationService.performOperationBalance(accountId, operationType, result);
 
         log.info("Performed division operation for user: {} with dividend: {} and divisor: {}", accountId, dividend, divisor);
 

@@ -32,10 +32,10 @@ public class ValidationUtils {
 
         for (String value : values) {
             if (null == value || value.isEmpty()) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

@@ -43,9 +43,9 @@ public class MultiplicationServiceImpl implements IMultiplicationService {
 
         Double multiplicand = request.getMultiplicand();
         Double multiplier = request.getMultiplier();
+        Double result = multiply(multiplicand, multiplier);
 
-        OperationResultResponse response = operationService.performOperationBalance(idUser, operationType);
-        response.setDoubleResult(multiply(multiplicand, multiplier));
+        OperationResultResponse response = operationService.performOperationBalance(idUser, operationType, result);
 
         log.info("Performed multiplication operation for user: {} with multiplicand: {} and multiplier: {}", idUser, multiplicand, multiplier);
 

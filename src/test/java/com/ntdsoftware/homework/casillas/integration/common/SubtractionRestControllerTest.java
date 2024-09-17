@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.controller.common;
+package com.ntdsoftware.homework.casillas.integration.common;
 
 
 import org.junit.jupiter.api.Test;

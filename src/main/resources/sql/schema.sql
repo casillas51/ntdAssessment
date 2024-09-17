@@ -2,6 +2,8 @@ CREATE SEQUENCE IF NOT EXISTS roles_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS users_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS users_del_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS operations_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS records_seq START WITH 1 INCREMENT BY 1;
+
 
 CREATE TABLE IF NOT EXISTS roles (
 	id_role INT AUTO_INCREMENT,
@@ -45,4 +47,22 @@ CREATE TABLE IF NOT EXISTS operations (
     type ENUM('ADDITION', 'SUBTRACTION', 'MULTIPLICATION', 'DIVISION', 'SQUARE_ROOT', 'RANDOM_STRING') NOT NULL UNIQUE,
     cost DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (id_operation)
+);
+
+CREATE TABLE IF NOT EXISTS records (
+    id_record INT AUTO_INCREMENT,
+    id_operation INT NOT NULL,
+    id_user INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    user_balance DECIMAL(10, 2) NOT NULL,
+    operation_response VARCHAR(255),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE NOT NULL,
+    PRIMARY KEY (id_record),
+    CONSTRAINT fk_record_operation
+        FOREIGN KEY (id_operation)
+        REFERENCES operations (id_operation),
+    CONSTRAINT fk_record_user
+        FOREIGN KEY (id_user)
+        REFERENCES users (id_user)
 );

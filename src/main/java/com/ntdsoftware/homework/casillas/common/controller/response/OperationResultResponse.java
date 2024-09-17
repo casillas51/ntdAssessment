@@ -29,8 +29,9 @@ public class OperationResultResponse {
      *
      * @param numericResult the numeric result of the operation
      */
-    public void setDoubleResult(Double numericResult) {
+    public OperationResultResponse setDoubleResult(Double numericResult) {
         this.result = String.valueOf(numericResult);
+        return this;
     }
 
 }

@@ -41,15 +41,15 @@ public class MultiplicationServiceTest implements ApplicationTest {
     @Test
     void whenMultiply_thenPerformMultiplication() {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.MULTIPLICATION)
-                .setCost(10.0).setBalance(100.0);
+                .setCost(10.0).setBalance(100.0).setResult("50.0");
         MultiplicationRequest request = new MultiplicationRequest().setMultiplicand(10.0).setMultiplier(5.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), any(Double.class))).thenReturn(response);
 
         OperationResultResponse result = multiplicationService.multiply(1, request);
 
         assertEquals(OperationTypeEnum.MULTIPLICATION, result.getOperationType());
-        assertEquals(50.0, result.getResult());
+        assertEquals("50.0", result.getResult());
     }
 
     /**

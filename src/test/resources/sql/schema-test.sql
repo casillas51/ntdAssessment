@@ -41,3 +41,21 @@ CREATE TABLE operations (
     cost DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (id_operation)
 );
+
+CREATE TABLE IF NOT EXISTS records (
+    id_record INT AUTO_INCREMENT,
+    id_operation INT NOT NULL,
+    id_user INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    user_balance DECIMAL(10, 2) NOT NULL,
+    operation_response VARCHAR(255),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted BOOLEAN DEFAULT FALSE NOT NULL,
+    PRIMARY KEY (id_record),
+    CONSTRAINT fk_record_operation
+        FOREIGN KEY (id_operation)
+        REFERENCES operations (id_operation),
+    CONSTRAINT fk_record_user
+        FOREIGN KEY (id_user)
+        REFERENCES users (id_user)
+);

@@ -39,11 +39,11 @@ public interface IUserService {
     /**
      * Retrieves a user by their username.
      *
-     * @param userName the username of the user to retrieve
+     * @param username the username of the user to retrieve
      * @return the user response
      * @throws ApplicationException if an error occurs during user retrieval
      */
-    int getUserId(String userName) throws ApplicationException;
+    int getUserId(String username) throws ApplicationException;
 
     /**
      * Updates a user with the given user request.

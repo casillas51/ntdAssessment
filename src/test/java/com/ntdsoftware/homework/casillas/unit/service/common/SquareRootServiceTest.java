@@ -41,15 +41,15 @@ public class SquareRootServiceTest implements ApplicationTest {
     @Test
     void whenSquareRoot_thenPerformSquareRoot() {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.SQUARE_ROOT)
-                .setCost(10.0).setBalance(100.0);
+                .setCost(10.0).setBalance(100.0).setResult("5.0");
         SquareRootRequest request = new SquareRootRequest().setRadicand(25.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), any(Double.class))).thenReturn(response);
 
         OperationResultResponse result = squareRootService.squareRoot(1, request);
 
         assertEquals(OperationTypeEnum.SQUARE_ROOT, result.getOperationType());
-        assertEquals(5.0, result.getResult());
+        assertEquals("5.0", result.getResult());
     }
 
     /**

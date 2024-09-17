@@ -46,9 +46,9 @@ public class SquareRootServiceImpl implements ISquareRootService {
         }
 
         Double radicand = request.getRadicand();
+        Double result = squareRoot(radicand);
 
-        OperationResultResponse response = operationService.performOperationBalance(userId, operationType);
-        response.setDoubleResult(squareRoot(radicand));
+        OperationResultResponse response = operationService.performOperationBalance(userId, operationType, result);
 
         log.info("Performed square root operation for user: {} with radicand: {}", userId, radicand);
 

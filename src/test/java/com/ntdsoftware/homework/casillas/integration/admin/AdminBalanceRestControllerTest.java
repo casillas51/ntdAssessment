@@ -1,4 +1,4 @@
-package com.ntdsoftware.homework.casillas.integration.controller.admin;
+package com.ntdsoftware.homework.casillas.integration.admin;
 
 import com.ntdsoftware.homework.casillas.admin.controller.response.BalanceResponse;
 import org.junit.jupiter.api.Test;

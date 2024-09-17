@@ -16,8 +16,7 @@ import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -55,9 +54,9 @@ public class RandomStringServiceTest implements ApplicationTest {
         GenerateStringResponse generateStringResponse = new GenerateStringResponse().setId(7).setJsonrpc("2.0").setResult(resultResponse);
 
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.RANDOM_STRING)
-                .setCost(10.0).setBalance(100.0);
+                .setCost(10.0).setBalance(100.0).setResult("gomEwFeMkmuYWGlvSDoywdisYRYfdPEE");
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), anyString())).thenReturn(response);
         when(apiRandomClient.generateString()).thenReturn(generateStringResponse);
 
         OperationResultResponse result = randomStringService.randomString(1);
@@ -77,7 +76,7 @@ public class RandomStringServiceTest implements ApplicationTest {
         OperationResultResponse response = new OperationResultResponse().setOperationType(OperationTypeEnum.RANDOM_STRING)
                 .setCost(10.0).setBalance(100.0);
 
-        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class))).thenReturn(response);
+        when(operationService.performOperationBalance(anyInt(), any(OperationTypeEnum.class), anyString())).thenReturn(response);
         when(apiRandomClient.generateString()).thenReturn(generateStringResponse);
 
         assertThrows(ApplicationException.class, () -> randomStringService.randomString(1));

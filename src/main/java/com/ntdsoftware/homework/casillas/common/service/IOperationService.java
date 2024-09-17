@@ -14,8 +14,19 @@ public interface IOperationService {
      *
      * @param userId        the ID of the user to perform the operation for
      * @param operationType the type of operation to perform
+     * @param result        the result of the operation
      * @return the result of the operation
      */
-    OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType);
+    public OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType, Double result);
+
+    /**
+     * Perform a balance operation for a user.
+     *
+     * @param userId        the ID of the user to perform the operation for
+     * @param operationType the type of operation to perform
+     * @param result        the result of the operation
+     * @return the result of the operation
+     */
+    public OperationResultResponse performOperationBalance(int userId, OperationTypeEnum operationType, String result);
 
 }
