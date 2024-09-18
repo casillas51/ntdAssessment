@@ -35,3 +35,6 @@ build/
 
 ### MVN libraries ###
 .mvn/
+
+### MAC OS ###
+.DS_Store

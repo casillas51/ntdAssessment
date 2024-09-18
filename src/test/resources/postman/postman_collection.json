@@ -1,0 +1,948 @@
+{
+	"info": {
+		"_postman_id": "56c75259-e6ed-4152-8d0d-19bad1a53d0f",
+		"name": "Coding Challenge NTDSoftware",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4197521"
+	},
+	"item": [
+		{
+			"name": "Common",
+			"item": [
+				{
+					"name": "LoginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"casillas\",\n    \"password\": \"helloAdmin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlPath}}{{loginPath}}",
+							"host": [
+								"{{urlPath}}{{loginPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Admin\",\n    \"password\": \"Adm123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlPath}}/auth/login",
+							"host": [
+								"{{urlPath}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlPath}}/auth/logout",
+							"host": [
+								"{{urlPath}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Balance",
+					"item": [
+						{
+							"name": "deposit",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "deposit",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/balance",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"balance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "deposit",
+											"value": "5",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/balance",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"balance"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Operations",
+					"item": [
+						{
+							"name": "addition",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"term1\": 2.5,\n    \"term2\": 4.8\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/operation/addition",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"addition"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "subtraction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"minuend\": 12.5,\n    \"subtrahend\": 3.5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/operation/subtraction",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"subtraction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "multiplication",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"multiplicand\": 5,\n    \"multiplier\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/operation/multiplication",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"multiplication"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "division",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dividend\": 10,\n    \"divisor\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/operation/division",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"division"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "square-root",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"radicand\": 25\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/operation/square-root",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"square-root"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "random-string",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{urlPathUser}}/operation/random-string",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"operation",
+										"random-string"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Record",
+					"item": [
+						{
+							"name": "searchByUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"operation\": null,\n        \"amount\": null,\n        \"userBalance\": null, \n        \"response\": null,\n        \"dateFrom\": null,\n        \"dateTo\": null,\n        \"isDeleted\": null\n    },\n    \"page\": 0,\n    \"size\": 10,\n    \"sorts\": {\n        \"amount\": \"ASC\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathUser}}/record",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"record"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{urlPathUser}}/record/5",
+									"host": [
+										"{{urlPathUser}}"
+									],
+									"path": [
+										"record",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"deleteme\",\n    \"password\": \"helloAdmin\",\n    \"active\": true,\n    \"role\": \"USER\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPath}}/admin/user",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urlPath}}/admin/user/11",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"casillas\",\n    \"active\": true,\n    \"role\": \"USER\",\n    \"balance\": 20.5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPath}}/admin/user/11",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{urlPath}}/admin/user/1003",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"1003"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"username\": null,\n        \"status\": null,\n        \"createdDateFrom\": null,\n        \"createdDateTo\": null, \n        \"role\": null,\n        \"deleted\": false\n    },\n    \"page\": 0,\n    \"size\": 10,\n    \"sorts\": {\n        \"role\": \"DESC\",\n        \"username\": \"ASC\"\n    }\n}\n\n{\n    \"query\": { \n        \"status\":\"ACTIVE\" \n    }, \n    \"page\":0,\n    \"size\":10 \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPath}}/admin/user/search",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Balance",
+					"item": [
+						{
+							"name": "updateBalance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "balance",
+											"value": "10.0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urlPath}}/admin/balance/11/update",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"balance",
+										"11",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "depositBalance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "deposit",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{urlPath}}/admin/balance/11/deposit",
+									"host": [
+										"{{urlPath}}"
+									],
+									"path": [
+										"admin",
+										"balance",
+										"11",
+										"deposit"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Record",
+					"item": [
+						{
+							"name": "getAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{urlPathAdmin}}/record",
+									"host": [
+										"{{urlPathAdmin}}"
+									],
+									"path": [
+										"record"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{urlPathAdmin}}/record/3",
+									"host": [
+										"{{urlPathAdmin}}"
+									],
+									"path": [
+										"record",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "searchRecords",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"username\": null,\n        \"operation\": null,\n        \"amount\": null,\n        \"userBalance\": null, \n        \"response\": null,\n        \"dateFrom\": null,\n        \"dateTo\": null,\n        \"isDeleted\": null\n    },\n    \"page\": 0,\n    \"size\": 10,\n    \"sorts\": {\n        \"amount\": \"ASC\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{urlPathAdmin}}/record",
+									"host": [
+										"{{urlPathAdmin}}"
+									],
+									"path": [
+										"record"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "RandomStrings",
+			"item": [
+				{
+					"name": "generateString",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"jsonrpc\": \"2.0\",\n    \"method\": \"generateStrings\",\n    \"params\": {\n        \"apiKey\": \"0739005b-6724-4315-9438-5e89d89ba7b7\",\n        \"n\": 1,\n        \"length\": 32,\n        \"characters\": \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n        \"replacement\": true\n    },\n    \"id\": 7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.random.org/json-rpc/4/invoke",
+							"protocol": "https",
+							"host": [
+								"api",
+								"random",
+								"org"
+							],
+							"path": [
+								"json-rpc",
+								"4",
+								"invoke"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Setting Bearer token\", () => {",
+					"",
+					"    //console.log(\"Verifyng token\");",
+					"",
+					"    if (undefined !== pm.response.headers.get('Authorization')) {",
+					"        pm.environment.set(\"bearerToken\", pm.response.headers.get('Authorization'));",
+					"      //  console.log(\"Token refreshed \" + pm.response.headers.get('Authorization'));",
+					"    ",
+					"    } else {",
+					"        var jsonData = pm.response.json();",
+					"        pm.environment.set(\"bearerToken\", jsonData['token']);",
+					"        //console.log(\"Update token by login\");",
+					"    }",
+					"    ",
+					"})"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "urlPath",
+			"value": "localhost:8080/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "loginPath",
+			"value": "/auth/login",
+			"type": "string"
+		},
+		{
+			"key": "urlPathUser",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "urlPathAdmin",
+			"value": "localhost:8080/api/v1/admin",
+			"type": "string"
+		}
+	]
+}
